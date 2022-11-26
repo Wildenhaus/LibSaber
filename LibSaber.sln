@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSaber", "src\LibSaber\LibSaber.csproj", "{F3BBD7DF-1A22-4B21-8C56-38635BBC0E82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSaber.HaloCEA", "src\LibSaber.HaloCEA\LibSaber.HaloCEA.csproj", "{0C540095-9D24-4510-B151-AF4AAF1EF533}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3BBD7DF-1A22-4B21-8C56-38635BBC0E82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3BBD7DF-1A22-4B21-8C56-38635BBC0E82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3BBD7DF-1A22-4B21-8C56-38635BBC0E82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3BBD7DF-1A22-4B21-8C56-38635BBC0E82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C540095-9D24-4510-B151-AF4AAF1EF533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C540095-9D24-4510-B151-AF4AAF1EF533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C540095-9D24-4510-B151-AF4AAF1EF533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C540095-9D24-4510-B151-AF4AAF1EF533}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BE0D65A-E2FA-4FEC-950B-6A50762C030E}
+	EndGlobalSection
+EndGlobal
