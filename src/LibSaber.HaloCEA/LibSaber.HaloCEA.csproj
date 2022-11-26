@@ -10,4 +10,8 @@
     <ProjectReference Include="..\LibSaber\LibSaber.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

@@ -21,4 +21,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\LibSaber.HaloCEA\LibSaber.HaloCEA.csproj" />
+    <ProjectReference Include="..\..\src\LibSaber\LibSaber.csproj" />
+  </ItemGroup>
+
 </Project>
