@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibSaber.HaloCEA.Structures;
+﻿using LibSaber.HaloCEA.Structures;
 using LibSaber.IO;
+using LibSaber.Serialization;
 
 namespace LibSaber.HaloCEA.Tests
 {
@@ -20,7 +16,7 @@ namespace LibSaber.HaloCEA.Tests
       var reader = new NativeReader( stream, Endianness.LittleEndian );
 
       //== Act ==================================
-      var template = Data_02E4.Deserialize( reader );
+      var template = Data_02E4.Deserialize( reader, new SerializationContext() );
 
       //== Assert ===============================
 
