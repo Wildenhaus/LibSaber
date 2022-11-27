@@ -21,6 +21,7 @@ namespace LibSaber.HaloCEA.Structures
       {
         reader.Position -= 6;
         objectList.Add( SaberObject.Deserialize( reader, context ) );
+        reader.Position -= 6;
         return objectList;
       }
 
