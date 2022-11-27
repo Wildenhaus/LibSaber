@@ -5,14 +5,15 @@ using LibSaber.Serialization;
 namespace LibSaber.HaloCEA.Tests
 {
 
-  public class TemplateSerializationTests
+  public class TemplateSerializationTests : TestBase
   {
 
-    [Fact]
-    public void TestTemplateSerialization()
+    [Theory]
+    [MemberData( nameof( GetFilePathsWithExtension ), parameters: ".Template" )]
+    public void TestTemplateSerialization( string filePath )
     {
       //== Arrange ==============================
-      var stream = File.OpenRead( @"G:\h1a\x\a10\marine.Template" );
+      var stream = File.OpenRead( filePath );
       var reader = new NativeReader( stream, Endianness.LittleEndian );
 
       //== Act ==================================
