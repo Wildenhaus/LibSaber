@@ -40,6 +40,8 @@ namespace LibSaber.IO
 
     #region Public Methods
 
+    public int Read( Span<byte> buffer ) => BaseStream.Read( buffer );
+
     public Boolean ReadBoolean() => ReadUnmanaged<Boolean>();
     public Byte ReadByte() => ReadUnmanaged<Byte>();
     public SByte ReadSByte() => ReadUnmanaged<SByte>();
@@ -113,7 +115,10 @@ namespace LibSaber.IO
 
       var c = ReadUnmanaged<Byte>();
       while ( c != 0 )
+      {
         sb.Append( ( char ) c );
+        c = ReadUnmanaged<Byte>();
+      }
 
       return sb.ToString();
     }

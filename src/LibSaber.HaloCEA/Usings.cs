@@ -3,6 +3,10 @@
 #region Default Types
 
 global using SentinelId = System.Int16;
-global using Sentinel = LibSaber.Shared.Sentinel<System.Int16, System.Int32>;
+global using SentinelOffset = System.Int32;
+global using Sentinel = LibSaber.Shared.Data.Sentinel<System.Int32>;
+global using SentinelReader = LibSaber.Serialization.SentinelReader<System.Int32>;
+
+global using SplineData = LibSaber.Shared.Data.SplineData<System.Int32>;
 
 #endregion
