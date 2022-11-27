@@ -1,7 +1,7 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
 using LibSaber.Shared.Attributes;
-using LibSaber.Shared.Data;
+using LibSaber.Shared.Structures;
 
 namespace LibSaber.HaloCEA.Structures
 {

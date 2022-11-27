@@ -1,5 +1,5 @@
 ﻿using LibSaber.IO;
-using LibSaber.Shared.Data;
+using LibSaber.Shared.Structures;
 
 namespace LibSaber.Serialization
 {

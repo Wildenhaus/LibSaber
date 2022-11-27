@@ -1,6 +1,6 @@
 ﻿using LibSaber.IO;
 
-namespace LibSaber.Shared.Data
+namespace LibSaber.Shared.Structures
 {
 
   public readonly struct Sentinel<TOffset>

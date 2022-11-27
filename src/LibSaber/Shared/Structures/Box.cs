@@ -2,7 +2,7 @@
 using LibSaber.Serialization;
 using LibSaber.Shared.Attributes;
 
-namespace LibSaber.Shared.Data
+namespace LibSaber.Shared.Structures
 {
 
   [SaberInternalName( "m3d::BOX" )]

@@ -2,7 +2,7 @@
 using LibSaber.IO;
 using LibSaber.Serialization;
 
-namespace LibSaber.Shared.Data
+namespace LibSaber.Shared.Structures
 {
 
   public class BitSet<TCount> : ISerialData<BitSet<TCount>>
