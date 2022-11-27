@@ -53,14 +53,17 @@ namespace LibSaber.Serialization
 
     #region Public Methods
 
+    [DebuggerHidden]
     public bool Next( bool boundsCheck = true )
     {
       if ( boundsCheck && _index > -1 )
       {
+        var difference = Math.Abs( EndOffset - _reader.Position );
+
         if ( EndOffset < _reader.Position )
-          FAIL( "Over-read Sentinel 0x{0:X2} block.", Sentinel.Id );
+          FAIL( "Over-read Sentinel 0x{0:X2} block by {1} byte(s).", Sentinel.Id, difference );
         else if ( EndOffset > _reader.Position )
-          FAIL( "Under-read Sentinel 0x{0:X2} block.", Sentinel.Id );
+          FAIL( "Under-read Sentinel 0x{0:X2} block by {1} byte(s).", Sentinel.Id, difference );
       }
 
       _index++;
