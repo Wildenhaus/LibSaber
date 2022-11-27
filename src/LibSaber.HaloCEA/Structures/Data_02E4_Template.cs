@@ -122,6 +122,9 @@ namespace LibSaber.HaloCEA.Structures
             template.Objects = SaberObjectList.Deserialize( reader, context );
             break;
 
+          case SentinelIds.Delimiter:
+            return template;
+
           default:
             sentinelReader.ReportUnknownSentinel();
             break;

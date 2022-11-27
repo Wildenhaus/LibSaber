@@ -40,22 +40,22 @@ namespace LibSaber.HaloCEA.Structures
     public Data_0130? InterleavedDataBuffer;
 
     // Object Sentinels =================================================
-    [Sentinel( CEAObjectSentinels.VertexBuffer )]
-    public List<CEAVertex> Vertices;
+    [Sentinel( SaberObjectSentinelIds.VertexBuffer )]
+    public VertexBuffer Vertices;
 
-    [Sentinel( CEAObjectSentinels.FaceBuffer )]
-    public List<Face> Faces;
+    [Sentinel( SaberObjectSentinelIds.FaceBuffer )]
+    public FaceBuffer Faces;
 
-    [Sentinel( CEAObjectSentinels.Sentinel_00F8 )]
+    [Sentinel( SaberObjectSentinelIds.Sentinel_00F8 )]
     public Vector4<byte>? MaterialColor;
 
-    [Sentinel( CEAObjectSentinels.Matrix )]
+    [Sentinel( SaberObjectSentinelIds.Matrix )]
     public Matrix4<float>? Matrix;
 
-    [Sentinel( CEAObjectSentinels.Sentinel_00FA )]
+    [Sentinel( SaberObjectSentinelIds.Sentinel_00FA )]
     public int? UnkBoneId; // Bone ID?
 
-    [Sentinel( CEAObjectSentinels.Sentinel_00FD )]
+    [Sentinel( SaberObjectSentinelIds.Sentinel_00FD )]
     public string? UnkScripting; // Scripting?
 
     #endregion
@@ -121,32 +121,32 @@ namespace LibSaber.HaloCEA.Structures
           }
 
           // Object Sentinels =================================================
-          case CEAObjectSentinels.VertexBuffer:
+          case SaberObjectSentinelIds.VertexBuffer:
           {
-            obj.Vertices = CEAVertexBuffer.Deserialize( reader, context );
+            obj.Vertices = VertexBuffer.Deserialize( reader, context );
             break;
           }
-          case CEAObjectSentinels.FaceBuffer:
+          case SaberObjectSentinelIds.FaceBuffer:
           {
             obj.Faces = FaceBuffer.Deserialize( reader, context );
             break;
           }
-          case CEAObjectSentinels.Sentinel_00F8:
+          case SaberObjectSentinelIds.Sentinel_00F8:
           {
             obj.MaterialColor = Vector4<byte>.Deserialize( reader, context );
             break;
           }
-          case CEAObjectSentinels.Matrix:
+          case SaberObjectSentinelIds.Matrix:
           {
             obj.Matrix = Matrix4<float>.Deserialize( reader, context );
             break;
           }
-          case CEAObjectSentinels.Sentinel_00FA:
+          case SaberObjectSentinelIds.Sentinel_00FA:
           {
             obj.UnkBoneId = reader.ReadInt32();
             break;
           }
-          case CEAObjectSentinels.Sentinel_00FD:
+          case SaberObjectSentinelIds.Sentinel_00FD:
           {
             var innerSentinelReader = new SentinelReader( reader );
             innerSentinelReader.Next();
@@ -176,7 +176,7 @@ namespace LibSaber.HaloCEA.Structures
 
     #region CEAObject Sentinels
 
-    private static class CEAObjectSentinels
+    private static class SaberObjectSentinelIds
     {
       public const SentinelId Sentinel_00F0 = 0x00F0;
       public const SentinelId VertexBuffer = 0x00F1;

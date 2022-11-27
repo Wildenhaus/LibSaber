@@ -35,7 +35,7 @@ namespace LibSaber.HaloCEA.Structures
       var entries = data.Entries = new List<CEAObjectAnimation>( count );
       for ( var i = 0; i < count; i++ )
       {
-        sentinelReader.Next( false );
+        sentinelReader.Next();
         entries.Add( CEAObjectAnimation.Deserialize( reader, context ) );
       }
 
