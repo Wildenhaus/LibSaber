@@ -47,7 +47,9 @@ namespace LibSaber.Shared.Structures
     {
       var count = ReadCount(reader).ToInt32(null);
 
-      var numBytes = (count + 7) / sizeof(byte);
+      const int FLAGS_PER_BYTE = 8;
+      var numBytes = (count + 7) / FLAGS_PER_BYTE;
+
       var data = new byte[numBytes];
       reader.Read( data );
 
