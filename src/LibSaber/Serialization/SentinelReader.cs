@@ -1,4 +1,5 @@
-﻿using LibSaber.IO;
+﻿using System.Diagnostics;
+using LibSaber.IO;
 using LibSaber.Shared.Structures;
 
 namespace LibSaber.Serialization
@@ -52,12 +53,10 @@ namespace LibSaber.Serialization
 
     #region Public Methods
 
-    public bool Next()
+    public bool Next( bool boundsCheck = true )
     {
-      if ( _index > -1 )
+      if ( boundsCheck && _index > -1 )
       {
-        var boundsComparison = EndOffset.CompareTo( _reader.Position );
-
         if ( EndOffset < _reader.Position )
           FAIL( "Over-read Sentinel 0x{0:X2} block.", Sentinel.Id );
         else if ( EndOffset > _reader.Position )
@@ -78,6 +77,7 @@ namespace LibSaber.Serialization
       Next();
     }
 
+    [DebuggerHidden]
     public void ReportUnknownSentinel()
       => FAIL( "Unknown Sentinel: 0x{0:X2}", SentinelId );
 
