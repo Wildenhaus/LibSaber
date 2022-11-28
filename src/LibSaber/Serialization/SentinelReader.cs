@@ -17,6 +17,8 @@ namespace LibSaber.Serialization
     private int _index;
     private Sentinel<TOffset> _currentSentinel;
 
+    private bool _delimiterFlag;
+
     #endregion
 
     #region Properties
@@ -56,7 +58,7 @@ namespace LibSaber.Serialization
     [DebuggerHidden]
     public bool Next( bool boundsCheck = true )
     {
-      if ( boundsCheck && _index > -1 )
+      if ( boundsCheck && !_delimiterFlag && _index > -1 )
       {
         var difference = Math.Abs( EndOffset - _reader.Position );
 
@@ -68,17 +70,23 @@ namespace LibSaber.Serialization
 
       _index++;
       _currentSentinel = Sentinel<TOffset>.Read( _reader );
+      _delimiterFlag = false;
 
       if ( _reader.Position == _stream.Length )
         return false;
 
+      //Console.WriteLine( "0x{0:X2}", SentinelId );
       return true;
     }
 
     public void BurnSentinel()
     {
       Next();
+      ASSERT( SentinelId == 1 );
     }
+
+    public void SetDelimiterFlag()
+      => _delimiterFlag = true;
 
     [DebuggerHidden]
     public void ReportUnknownSentinel()

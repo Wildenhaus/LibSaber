@@ -27,6 +27,15 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( SentinelIds.Sentinel_0116 )]
     public Data_0116? SkinningData;
 
+    [Sentinel( SentinelIds.Sentinel_0123 )]
+    public bool Data_0123;
+
+    [Sentinel( SentinelIds.Sentinel_0129 )]
+    public Data_0129 SharingObjectInfo;
+
+    [Sentinel( SentinelIds.Sentinel_012A )]
+    public bool Data_012A;
+
     [Sentinel( SentinelIds.Sentinel_012B )]
     public int? ParentId;
 
@@ -38,6 +47,15 @@ namespace LibSaber.HaloCEA.Structures
 
     [Sentinel( SentinelIds.Sentinel_0130 )]
     public Data_0130? InterleavedDataBuffer;
+
+    [Sentinel( SentinelIds.Sentinel_0131 )]
+    public bool Data_0131;
+
+    [Sentinel( SentinelIds.Sentinel_0135 )]
+    public Data_0135 TranslationVectors;
+
+    [Sentinel( SentinelIds.Sentinel_0483 )]
+    public int Data_0483;
 
     // Object Sentinels =================================================
     [Sentinel( SaberObjectSentinelIds.VertexBuffer )]
@@ -99,6 +117,23 @@ namespace LibSaber.HaloCEA.Structures
             obj.SkinningData = Data_0116.Deserialize( reader, context );
             break;
           }
+          case SentinelIds.Sentinel_0123:
+          {
+            // Not sure what this is... it's empty. Sets flags?
+            obj.Data_0123 = true;
+            break;
+          }
+          case SentinelIds.Sentinel_0129:
+          {
+            obj.SharingObjectInfo = Data_0129.Deserialize( reader, context );
+            break;
+          }
+          case SentinelIds.Sentinel_012A:
+          {
+            // Not sure what this is... it's empty. Sets flags?
+            obj.Data_012A = true;
+            break;
+          }
           case SentinelIds.Sentinel_012B:
           {
             obj.ParentId = reader.ReadInt32();
@@ -117,6 +152,22 @@ namespace LibSaber.HaloCEA.Structures
           case SentinelIds.Sentinel_0130:
           {
             obj.InterleavedDataBuffer = Data_0130.Deserialize( reader, context );
+            break;
+          }
+          case SentinelIds.Sentinel_0131:
+          {
+            // Not sure what this is... it's empty. Sets flags?
+            obj.Data_0131 = true;
+            break;
+          }
+          case SentinelIds.Sentinel_0135:
+          {
+            obj.TranslationVectors = Data_0135.Deserialize( reader, context );
+            break;
+          }
+          case SentinelIds.Sentinel_0483:
+          {
+            obj.Data_0483 = reader.ReadInt32();
             break;
           }
 

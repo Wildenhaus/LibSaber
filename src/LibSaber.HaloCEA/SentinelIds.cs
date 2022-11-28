@@ -78,7 +78,7 @@
     public const SentinelId Sentinel_021D = 0x021D; // always 0?
     public const SentinelId Sentinel_021E = 0x021E;
     public const SentinelId Sentinel_021F = 0x021F;
-    public const SentinelId Sentinel_0220 = 0x0220;
+    public const SentinelId Sentinel_0220 = 0x0220; // Some kind of 
     public const SentinelId Sentinel_0221 = 0x0221;
     public const SentinelId Sentinel_0222 = 0x0222;
 
@@ -160,7 +160,7 @@
 
     public const SentinelId Sentinel_03B9 = 0x03B9; // Object Info
 
-    public const SentinelId Sentinel_03C0 = 0x03C0;
+    public const SentinelId Sentinel_03C0 = 0x03C0; // Scene Guid?
 
     public const SentinelId Sentinel_0424 = 0x0424;
     public const SentinelId Sentinel_0425 = 0x0425;

@@ -57,13 +57,19 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( CEATemplateSentinels.ObjectList )]
     public SaberObjectList Objects;
 
+    [Sentinel( SentinelIds.Sentinel_02E8 )]
+    public Data_02E8 Animations;
+
+    [Sentinel( SentinelIds.Sentinel_01BC )]
+    public int Data_01BC;
+
     #endregion
 
     #region Serialization
 
     public static Data_02E4 Deserialize( NativeReader reader, ISerializationContext context )
     {
-      AssertTemplateSentinel( reader );
+      //AssertTemplateSentinel( reader );
 
       var template = new Data_02E4();
 
@@ -84,6 +90,9 @@ namespace LibSaber.HaloCEA.Structures
             break;
           case SentinelIds.Sentinel_01BA:
             template.Sentinel_01BA = reader.ReadNullTerminatedString();
+            break;
+          case SentinelIds.Sentinel_01BC:
+            template.Data_01BC = reader.ReadInt32();
             break;
           case SentinelIds.Sentinel_021D:
             template.Sentinel_021D = reader.ReadInt32();
@@ -120,6 +129,7 @@ namespace LibSaber.HaloCEA.Structures
 
           case CEATemplateSentinels.ObjectList:
             template.Objects = SaberObjectList.Deserialize( reader, context );
+            sentinelReader.BurnSentinel();
             break;
 
           case SentinelIds.Delimiter:
