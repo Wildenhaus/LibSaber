@@ -20,7 +20,7 @@ namespace LibSaber.HaloCEA.Tests
       var template = SaberScene.Deserialize( reader, new SerializationContext() );
 
       //== Assert ===============================
-
+      Assert.Equal( reader.Position, stream.Length );
     }
 
   }

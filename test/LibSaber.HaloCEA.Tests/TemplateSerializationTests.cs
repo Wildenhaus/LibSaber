@@ -17,10 +17,10 @@ namespace LibSaber.HaloCEA.Tests
       var reader = new NativeReader( stream, Endianness.LittleEndian );
 
       //== Act ==================================
-      var template = Data_02E4.Deserialize( reader, new SerializationContext() );
+      var template = Template.Deserialize( reader, new SerializationContext() );
 
       //== Assert ===============================
-
+      Assert.Equal( reader.Position, stream.Length );
     }
 
   }
