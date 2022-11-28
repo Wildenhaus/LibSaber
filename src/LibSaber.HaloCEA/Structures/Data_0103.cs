@@ -1,14 +1,22 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Attributes;
 
 namespace LibSaber.HaloCEA.Structures
 {
 
+  [Sentinel( SentinelIds.Sentinel_0103 )]
   public struct Data_0103 : ISerialData<Data_0103>
   {
 
+    #region Data Members
+
     public int count;
     public int Unk_01;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0103 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -33,6 +41,9 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
+
   }
 
 }

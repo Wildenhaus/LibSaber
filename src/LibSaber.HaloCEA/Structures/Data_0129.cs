@@ -10,9 +10,15 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_0129 : ISerialData<Data_0129>
   {
 
+    #region Data Members
+
     public short SharedObjectId;
     public int VertexOffset;
     public int FaceOffset;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0129 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -24,6 +30,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

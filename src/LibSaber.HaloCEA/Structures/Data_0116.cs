@@ -9,7 +9,11 @@ namespace LibSaber.HaloCEA.Structures
   [Sentinel( SentinelIds.Sentinel_0116 )]
   public struct Data_0116 : ISerialData<Data_0116>
   {
+
+    #region Data Members
+
     // vertex bind data?
+
     public int Sentinel_0117_00; // bone count?
     public int ElementSize; // Element Size
 
@@ -23,6 +27,10 @@ namespace LibSaber.HaloCEA.Structures
     public short Sentinel_0133_01;
     //public byte[] Sentinel_0133_02;
     public Vector4<byte>[] BoneIds;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0116 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -131,6 +139,9 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
+
   }
 
 }

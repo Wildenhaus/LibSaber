@@ -9,11 +9,17 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_0311 : ISerialData<Data_0311>
   {
 
+    #region Data Members
+
     public short Count;
     public List<LodDefinition> LodDefinitions;
 
+    #endregion
+
     public static implicit operator List<LodDefinition>( Data_0311 list )
       => list.LodDefinitions;
+
+    #region Serialization
 
     public static Data_0311 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -27,6 +33,9 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
+
   }
 
 }

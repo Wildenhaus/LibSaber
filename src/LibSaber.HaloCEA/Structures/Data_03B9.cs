@@ -1,10 +1,12 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Attributes;
 using LibSaber.Shared.Structures;
 
 namespace LibSaber.HaloCEA.Structures
 {
 
+  [Sentinel( SentinelIds.Sentinel_03B9 )]
   public class Data_03B9 : ISerialData<Data_03B9>
   {
 

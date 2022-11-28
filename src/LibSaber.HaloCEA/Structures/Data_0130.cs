@@ -10,11 +10,17 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_0130 : ISerialData<Data_0130>
   {
 
+    #region Data Members
+
     public int Count;
     public BitSet<short> Flags;
 
     public byte ElementSize;
     public byte[] ElementData;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0130 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -32,6 +38,9 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
+
   }
 
 }

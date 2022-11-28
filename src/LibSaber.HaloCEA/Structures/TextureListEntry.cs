@@ -1,9 +1,11 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Attributes;
 
 namespace LibSaber.HaloCEA.Structures
 {
 
+  [Sentinel( SentinelIds.TextureListEntry )]
   public struct TextureListEntry : ISerialData<TextureListEntry>
   {
 

@@ -1,17 +1,25 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Attributes;
 
 namespace LibSaber.HaloCEA.Structures
 {
 
+  [Sentinel( SentinelIds.Sentinel_0222 )]
   public class Data_0222 : ISerialData<Data_0222>
   {
+
+    #region Data Members
 
     public int Unk_00;
     public int Unk_01;
     public byte[] Unk_02;
     public byte[] Unk_03;
     public byte[] Unk_04;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0222 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -36,6 +44,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

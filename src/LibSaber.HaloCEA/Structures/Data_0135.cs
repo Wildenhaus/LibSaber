@@ -10,8 +10,14 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_0135 : ISerialData<Data_0135>
   {
 
+    #region Data Members
+
     public Vector3<short> Translation;
     public Vector3<short> Scale;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0135 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -22,6 +28,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

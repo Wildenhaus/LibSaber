@@ -8,7 +8,7 @@ namespace LibSaber.HaloCEA.Structures
 
   [Sentinel( SentinelIds.ObjectAnim )]
   [SaberInternalName( "animOBJ_ANIM" )]
-  public struct CEAObjectAnimation : ISerialData<CEAObjectAnimation>
+  public struct ObjectAnimation : ISerialData<ObjectAnimation>
   {
 
     #region Data Members
@@ -51,9 +51,9 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Serialization
 
-    public static CEAObjectAnimation Deserialize( NativeReader reader, ISerializationContext context )
+    public static ObjectAnimation Deserialize( NativeReader reader, ISerializationContext context )
     {
-      var objectAnim = new CEAObjectAnimation();
+      var objectAnim = new ObjectAnimation();
 
       objectAnim.Unk_00 = reader.ReadInt32();
 

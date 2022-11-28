@@ -9,6 +9,8 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_021F : ISerialData<Data_021F>
   {
 
+    #region Data Members
+
     [Sentinel( SentinelIds.Sentinel_0220 )]
     public Data_0220 Data_0220;
 
@@ -17,6 +19,10 @@ namespace LibSaber.HaloCEA.Structures
 
     [Sentinel( SentinelIds.Sentinel_0222 )]
     public Data_0222 Data_0222;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_021F Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -48,6 +54,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

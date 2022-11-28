@@ -1,15 +1,23 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Attributes;
 
 namespace LibSaber.HaloCEA.Structures
 {
 
+  [Sentinel( SentinelIds.AnimationSequence_ActionFrames )]
   public struct ActionFrame : ISerialData<ActionFrame>
   {
+
+    #region Data Members
 
     public byte Unk_00;
     public int Frame;
     public string Comment;
+
+    #endregion
+
+    #region Serialization
 
     public static ActionFrame Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -20,6 +28,9 @@ namespace LibSaber.HaloCEA.Structures
         Comment = reader.ReadPascalString32(),
       };
     }
+
+    #endregion
+
   }
 
 }

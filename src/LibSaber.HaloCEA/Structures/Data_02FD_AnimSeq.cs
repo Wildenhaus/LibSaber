@@ -6,14 +6,14 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( SentinelIds.Sentinel_02FD )]
+  [Sentinel( SentinelIds.AnimationSequence )]
   [SaberInternalName( "animSEQ" )]
-  public struct CEAAnimationSequence : ISerialData<CEAAnimationSequence>
+  public struct AnimationSequence : ISerialData<AnimationSequence>
   {
 
     #region Data Members
 
-    [Sentinel( SentinelIds.Sentinel_02FE )]
+    [Sentinel( SentinelIds.AnimationSequence_Name )]
     [SaberInternalName( "name" )]
     public string Name;
 
@@ -36,49 +36,49 @@ namespace LibSaber.HaloCEA.Structures
     [SaberInternalName( "bbox" )]
     public Box BoundingBox;
 
-    [Sentinel( SentinelIds.Sentinel_0314 )]
+    [Sentinel( SentinelIds.AnimationSequence_ActionFrames )]
     public List<ActionFrame> ActionFrames; // actionFrames
 
     #endregion
 
     #region Serialization
 
-    public static CEAAnimationSequence Deserialize( NativeReader reader, ISerializationContext context )
+    public static AnimationSequence Deserialize( NativeReader reader, ISerializationContext context )
     {
-      var animSeq = new CEAAnimationSequence();
+      var animSeq = new AnimationSequence();
 
       var sentinelReader = new SentinelReader( reader );
       while ( sentinelReader.Next() )
       {
         switch ( sentinelReader.SentinelId )
         {
-          case 0x02FE:
+          case SentinelIds.AnimationSequence_Name:
             animSeq.Name = reader.ReadNullTerminatedString();
             break;
-          case 0x02F3:
+          case SentinelIds.Sentinel_02F3:
             animSeq.UnkTimeSec = reader.ReadFloat32();
             break;
-          case 0x02F4:
+          case SentinelIds.Sentinel_02F4:
             animSeq.UnkLenFrame = reader.ReadFloat32();
             break;
-          case 0x02FF:
+          case SentinelIds.Sentinel_02FF:
             animSeq.UnkStartFrame = reader.ReadFloat32();
             break;
-          case 0x0300:
+          case SentinelIds.Sentinel_0300:
             animSeq.UnkEndFrame = reader.ReadFloat32();
             break;
-          case 0x0301:
+          case SentinelIds.Sentinel_0301:
             animSeq.UnkOffsetFrame = reader.ReadFloat32();
             break;
-          case 0x0307:
+          case SentinelIds.Sentinel_0307:
             _ = reader.ReadInt32(); // unk
             animSeq.BoundingBox = Box.Deserialize( reader, context );
             break;
-          case 0x0314:
+          case SentinelIds.AnimationSequence_ActionFrames:
             animSeq.ActionFrames = DataList<ActionFrame>.Deserialize( reader, context );
             break;
 
-          case 0x0001:
+          case SentinelIds.Delimiter:
             return animSeq;
 
           default:

@@ -42,10 +42,15 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_0484_Entry : ISerialData<Data_0484_Entry>
   {
 
+    #region Data Members
+
     public string TypeName;
     public string TemplateName;
     public short Unk_Id;
 
+    #endregion
+
+    #region Serialization
 
     public static Data_0484_Entry Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -57,6 +62,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

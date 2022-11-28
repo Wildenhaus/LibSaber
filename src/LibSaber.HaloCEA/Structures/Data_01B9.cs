@@ -10,6 +10,8 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_01B9 : ISerialData<Data_01B9>
   {
 
+    #region Data Members
+
     public string Unk_00;
     public string Unk_01;
     public string Unk_02;
@@ -21,6 +23,10 @@ namespace LibSaber.HaloCEA.Structures
 
     [Sentinel( SentinelIds.Sentinel_01BD )]
     public short Data_01BD;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_01B9 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -46,6 +52,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

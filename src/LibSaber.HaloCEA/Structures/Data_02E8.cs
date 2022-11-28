@@ -12,13 +12,13 @@ namespace LibSaber.HaloCEA.Structures
     #region Data Members
 
     public int Count;
-    public List<CEAObjectAnimation> Entries;
+    public List<ObjectAnimation> Entries;
 
     #endregion
 
     #region Casts
 
-    public static implicit operator List<CEAObjectAnimation>( Data_02E8 dataList )
+    public static implicit operator List<ObjectAnimation>( Data_02E8 dataList )
       => dataList.Entries;
 
     #endregion
@@ -32,11 +32,11 @@ namespace LibSaber.HaloCEA.Structures
       var count = data.Count = reader.ReadInt32();
 
       var sentinelReader = new SentinelReader( reader );
-      var entries = data.Entries = new List<CEAObjectAnimation>( count );
+      var entries = data.Entries = new List<ObjectAnimation>( count );
       for ( var i = 0; i < count; i++ )
       {
         sentinelReader.Next( boundsCheck: false );
-        entries.Add( CEAObjectAnimation.Deserialize( reader, context ) );
+        entries.Add( ObjectAnimation.Deserialize( reader, context ) );
       }
 
       return data;

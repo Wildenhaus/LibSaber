@@ -18,8 +18,9 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( 0x00F3 )]
     public List<Data_0107_00F3> Sentinel_00F3;
 
-
     #endregion
+
+    #region Serialization
 
     public static Data_0107 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -56,6 +57,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

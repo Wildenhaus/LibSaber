@@ -9,10 +9,16 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_0313 : ISerialData<Data_0313>
   {
 
+    #region Data Members
+
     public string Unk_00;
     public int Unk_01;
 
     public byte[] HavokData;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0313 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -26,6 +32,9 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
+
   }
 
 }

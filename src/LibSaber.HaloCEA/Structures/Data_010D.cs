@@ -9,8 +9,14 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_010D : ISerialData<Data_010D>
   {
 
+    #region Data Members
+
     public int VertexOffset;
     public int VertexCount;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_010D Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -20,6 +26,9 @@ namespace LibSaber.HaloCEA.Structures
         VertexCount = reader.ReadInt32(),
       };
     }
+
+    #endregion
+
   }
 
 }

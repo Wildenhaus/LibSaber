@@ -14,6 +14,8 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_01B8 : List<Data_01B8_Entry>, ISerialData<Data_01B8>
   {
 
+    #region Constructor
+
     public Data_01B8()
     {
     }
@@ -23,27 +25,36 @@ namespace LibSaber.HaloCEA.Structures
     {
     }
 
+    #endregion
+
+    #region Serialization
+
     public static Data_01B8 Deserialize( NativeReader reader, ISerializationContext context )
     {
       var count = reader.ReadInt32();
       var data = new Data_01B8( count );
 
-      var sentinelReader = new SentinelReader( reader );
       for ( var i = 0; i < count; i++ )
-      {
         data.Add( Data_01B8_Entry.Deserialize( reader, context ) );
-      }
 
       return data;
     }
+
+    #endregion
 
   }
 
   public class Data_01B8_Entry : ISerialData<Data_01B8_Entry>
   {
 
+    #region Data Members
+
     public Data_01B9 Data_01B9;
     public string Data_01BB;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_01B8_Entry Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -61,6 +72,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibSaber.IO;
+﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Attributes;
 
 namespace LibSaber.HaloCEA.Structures
 {
 
+  [Sentinel( SentinelIds.Sentinel_0221 )]
   public class Data_0221 : ISerialData<Data_0221>
   {
+
+    #region Data Members
 
     public int Unk_00;
     public int Unk_01;
     public byte[] Unk_02;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0221 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -52,6 +55,8 @@ namespace LibSaber.HaloCEA.Structures
       context.AddObject( data );
       return data;
     }
+
+    #endregion
 
   }
 

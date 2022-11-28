@@ -5,20 +5,20 @@ using LibSaber.Shared.Attributes;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( 0x02E6 )]
+  [Sentinel( SentinelIds.Sentinel_02E6 )]
   public struct Data_02E6 : ISerialData<Data_02E6>
   {
 
     #region Data Members
 
     public int Count;
-    public List<CEAAnimationSequence> Entries;
+    public List<AnimationSequence> Entries;
 
     #endregion
 
     #region Casts
 
-    public static implicit operator List<CEAAnimationSequence>( Data_02E6 dataList )
+    public static implicit operator List<AnimationSequence>( Data_02E6 dataList )
       => dataList.Entries;
 
     #endregion
@@ -32,11 +32,11 @@ namespace LibSaber.HaloCEA.Structures
       var count = data.Count = reader.ReadInt32();
 
       var sentinelReader = new SentinelReader( reader );
-      var entries = data.Entries = new List<CEAAnimationSequence>( count );
+      var entries = data.Entries = new List<AnimationSequence>( count );
       for ( var i = 0; i < count; i++ )
       {
         sentinelReader.Next();
-        entries.Add( CEAAnimationSequence.Deserialize( reader, context ) );
+        entries.Add( AnimationSequence.Deserialize( reader, context ) );
       }
 
       return data;
@@ -45,4 +45,5 @@ namespace LibSaber.HaloCEA.Structures
     #endregion
 
   }
+
 }

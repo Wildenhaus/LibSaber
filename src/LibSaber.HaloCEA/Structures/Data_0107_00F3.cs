@@ -9,11 +9,17 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_0107_00F3 : ISerialData<Data_0107_00F3>
   {
 
+    #region Data Members
+
     [Sentinel( SentinelIds.Sentinel_0103 )]
     public Data_0103 Sentinel_0103;
 
     [Sentinel( SentinelIds.Sentinel_0126 )]
     public bool Sentinel_0126; // Empty? just setting a bool for presence.
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0107_00F3 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -42,6 +48,9 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
+
   }
 
 }

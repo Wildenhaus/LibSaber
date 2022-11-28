@@ -9,8 +9,14 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_0285 : ISerialData<Data_0285>
   {
 
+    #region Data Members
+
     public int Unk_00;
     public int Unk_01;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0285 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -21,6 +27,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 

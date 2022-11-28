@@ -9,8 +9,14 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_011C : ISerialData<Data_011C>
   {
 
+    #region Data Members
+
     public float Unk_00;
     public float Unk_01;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_011C Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -20,6 +26,9 @@ namespace LibSaber.HaloCEA.Structures
         Unk_01 = reader.ReadFloat32(),
       };
     }
+
+    #endregion
+
   }
 
 }

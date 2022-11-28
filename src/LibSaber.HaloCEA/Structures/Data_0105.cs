@@ -9,8 +9,14 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_0105 : ISerialData<Data_0105>
   {
 
+    #region Data Members
+
     public int FaceOffset;
     public int FaceCount;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0105 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -20,6 +26,9 @@ namespace LibSaber.HaloCEA.Structures
         FaceCount = reader.ReadInt32(),
       };
     }
+
+    #endregion
+
   }
 
 }

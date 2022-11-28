@@ -9,9 +9,15 @@ namespace LibSaber.HaloCEA.Structures
   public struct Data_0108 : ISerialData<Data_0108>
   {
 
+    #region Data Members
+
     public byte Unk_00;
     public short Unk_01;
     public byte Unk_02;
+
+    #endregion
+
+    #region Serialization
 
     public static Data_0108 Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -22,6 +28,9 @@ namespace LibSaber.HaloCEA.Structures
         Unk_02 = reader.ReadByte()
       };
     }
+
+    #endregion
+
   }
 
 }

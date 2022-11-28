@@ -113,8 +113,8 @@
     public const SentinelId ObjectAnim_IniTranslation = 0x02FA;  // object animation initial translation
     public const SentinelId ObjectAnim_IniRotation = 0x02FB; // object animation initial rotation
     public const SentinelId ObjectAnim_IniScale = 0x02FC; // object animation initial scale
-    public const SentinelId Sentinel_02FD = 0x02FD; // AnimSeq
-    public const SentinelId Sentinel_02FE = 0x02FE; // AnimSeq.Name
+    public const SentinelId AnimationSequence = 0x02FD; // AnimSeq
+    public const SentinelId AnimationSequence_Name = 0x02FE; // AnimSeq.Name
     public const SentinelId Sentinel_02FF = 0x02FF; // AnimSeq.StartFrame
     public const SentinelId Sentinel_0300 = 0x0300; // AnimSeq.EndFrame
     public const SentinelId Sentinel_0301 = 0x0301; // AnimSeq.OffsetFrame
@@ -135,7 +135,7 @@
     public const SentinelId Sentinel_0311 = 0x0311; // LOD Definition List
     public const SentinelId Sentinel_0312 = 0x0312; // Template Info (scripting)
     public const SentinelId Sentinel_0313 = 0x0313;
-    public const SentinelId Sentinel_0314 = 0x0314; // AnimSeq.ActionFrames
+    public const SentinelId AnimationSequence_ActionFrames = 0x0314; // AnimSeq.ActionFrames
     public const SentinelId Sentinel_0315 = 0x0315;
 
     public const SentinelId Sentinel_0316 = 0x0316; // Template Flags?

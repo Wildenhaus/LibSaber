@@ -25,10 +25,10 @@ namespace LibSaber.HaloCEA.Structures
     public string? Sentinel_01BA;
 
     [Sentinel( SentinelIds.Sentinel_02E8 )]
-    public List<CEAObjectAnimation> ObjectAnimations;
+    public List<ObjectAnimation> ObjectAnimations;
 
     [Sentinel( SentinelIds.Sentinel_02E6 )]
-    public List<CEAAnimationSequence> AnimationSequences;
+    public List<AnimationSequence> AnimationSequences;
 
     [Sentinel( SentinelIds.Sentinel_021D )]
     public int? Sentinel_021D;

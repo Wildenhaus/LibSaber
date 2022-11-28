@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibSaber.HaloCEA.Structures
+﻿namespace LibSaber.HaloCEA.Structures
 {
 
   public struct Face

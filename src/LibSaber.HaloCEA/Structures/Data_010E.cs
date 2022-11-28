@@ -18,6 +18,8 @@ namespace LibSaber.HaloCEA.Structures
 
     #endregion
 
+    #region Serialization
+
     public static Data_010E Deserialize( NativeReader reader, ISerializationContext context )
     {
       return new Data_010E
@@ -28,6 +30,8 @@ namespace LibSaber.HaloCEA.Structures
         Unk_03 = reader.ReadByte(),
       };
     }
+
+    #endregion
 
   }
 

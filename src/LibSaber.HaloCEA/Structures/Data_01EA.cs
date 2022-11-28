@@ -9,6 +9,8 @@ namespace LibSaber.HaloCEA.Structures
   public class Data_01EA : List<Data_02E4>, ISerialData<Data_01EA>
   {
 
+    #region Constructor
+
     public Data_01EA()
     {
     }
@@ -17,6 +19,10 @@ namespace LibSaber.HaloCEA.Structures
       : base( capacity )
     {
     }
+
+    #endregion
+
+    #region Serialization
 
     public static Data_01EA Deserialize( NativeReader reader, ISerializationContext context )
     {
@@ -33,6 +39,8 @@ namespace LibSaber.HaloCEA.Structures
 
       return data;
     }
+
+    #endregion
 
   }
 
