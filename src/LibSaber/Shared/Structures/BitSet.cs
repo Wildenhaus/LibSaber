@@ -1,11 +1,13 @@
 ﻿using System.Collections;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using LibSaber.IO;
 using LibSaber.Serialization;
 
 namespace LibSaber.Shared.Structures
 {
 
-  public class BitSet<TCount> : ISerialData<BitSet<TCount>>
+  public class BitSet<TCount> : IEnumerable<bool>, ISerialData<BitSet<TCount>>
     where TCount : unmanaged, IConvertible
   {
 
@@ -41,6 +43,27 @@ namespace LibSaber.Shared.Structures
 
     #endregion
 
+    #region Public Methods
+
+    [MethodImpl( MethodImplOptions.AggressiveOptimization )]
+    public bool HasFlag<TEnum>( TEnum flag )
+      where TEnum : Enum
+      => _bitArray[ GetFlagIndex( flag ) ];
+
+    #endregion
+
+    #region Private Methods
+
+    [MethodImpl( MethodImplOptions.AggressiveInlining )]
+    private static int GetFlagIndex<TEnum>( TEnum value )
+      where TEnum : Enum
+    {
+      var numericValue = Convert.ToUInt64( value );
+      return BitOperations.Log2( numericValue );
+    }
+
+    #endregion
+
     #region Serialization
 
     public static BitSet<TCount> Deserialize( NativeReader reader, ISerializationContext context )
@@ -58,6 +81,19 @@ namespace LibSaber.Shared.Structures
 
     private static TCount ReadCount( NativeReader reader )
       => reader.ReadUnmanaged<TCount>();
+
+    #endregion
+
+    #region IEnumerable Methods
+
+    public IEnumerator<bool> GetEnumerator()
+    {
+      for ( var i = 0; i < _count; i++ )
+        yield return _bitArray[ i ];
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+      => GetEnumerator();
 
     #endregion
 
