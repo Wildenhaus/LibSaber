@@ -1,4 +1,6 @@
-﻿using LibSaber.IO;
+﻿using System.Diagnostics;
+using System.Text;
+using LibSaber.IO;
 using LibSaber.Serialization;
 using LibSaber.Shared.Attributes;
 using LibSaber.Shared.Structures;
@@ -12,31 +14,31 @@ namespace LibSaber.HaloCEA.Structures
     #region Data Members
 
     // Global Sentinels =================================================
-    [Sentinel( SentinelIds.Sentinel_03B9 )]
+    [Sentinel( SentinelIds.ObjectInfo )]
     public Data_03B9 ObjectInfo;
 
-    [Sentinel( SentinelIds.Sentinel_0107 )]
-    public Data_0107? UnkSubmeshData;
+    [Sentinel( SentinelIds.ObjectSubmeshData )]
+    public Data_0107? SubmeshData;
 
-    [Sentinel( SentinelIds.Sentinel_011D )]
+    [Sentinel( SentinelIds.ObjectBoundingBox )]
     public Box? BoundingBox;
 
-    [Sentinel( SentinelIds.Sentinel_0115 )]
+    [Sentinel( SentinelIds.ObjectAffixes )]
     public string? Affixes;
 
-    [Sentinel( SentinelIds.Sentinel_0116 )]
+    [Sentinel( SentinelIds.ObjectSkinningData )]
     public Data_0116? SkinningData;
 
     [Sentinel( SentinelIds.Sentinel_0123 )]
     public bool Data_0123;
 
-    [Sentinel( SentinelIds.Sentinel_0129 )]
+    [Sentinel( SentinelIds.ObjectSharingObjectInfo )]
     public Data_0129 SharingObjectInfo;
 
     [Sentinel( SentinelIds.Sentinel_012A )]
     public bool Data_012A;
 
-    [Sentinel( SentinelIds.Sentinel_012B )]
+    [Sentinel( SentinelIds.ObjectParentId )]
     public int? ParentId;
 
     [Sentinel( SentinelIds.Sentinel_012E )]
@@ -45,7 +47,7 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( SentinelIds.Sentinel_012F )]
     public Data_012F? UnkMaterialData;
 
-    [Sentinel( SentinelIds.Sentinel_0130 )]
+    [Sentinel( SentinelIds.ObjectInterleavedBuffer )]
     public Data_0130? InterleavedDataBuffer;
 
     [Sentinel( SentinelIds.Sentinel_0131 )]
@@ -58,16 +60,16 @@ namespace LibSaber.HaloCEA.Structures
     public int Data_0483;
 
     // Object Sentinels =================================================
-    [Sentinel( SaberObjectSentinelIds.VertexBuffer )]
+    [Sentinel( SaberObjectSentinelIds.ObjectVertexBuffer )]
     public VertexBuffer Vertices;
 
-    [Sentinel( SaberObjectSentinelIds.FaceBuffer )]
+    [Sentinel( SaberObjectSentinelIds.ObjectFaceBuffer )]
     public FaceBuffer Faces;
 
-    [Sentinel( SaberObjectSentinelIds.Sentinel_00F8 )]
+    [Sentinel( SaberObjectSentinelIds.ObjectMaterialColor )]
     public Vector4<byte>? MaterialColor;
 
-    [Sentinel( SaberObjectSentinelIds.Matrix )]
+    [Sentinel( SaberObjectSentinelIds.ObjectMatrix )]
     public Matrix4<float>? Matrix;
 
     [Sentinel( SaberObjectSentinelIds.Sentinel_00FA )]
@@ -91,28 +93,28 @@ namespace LibSaber.HaloCEA.Structures
         switch ( sentinelReader.SentinelId )
         {
           // Global Sentinels =================================================
-          case SentinelIds.Sentinel_03B9:
+          case SentinelIds.ObjectInfo:
           {
             obj.ObjectInfo = Data_03B9.Deserialize( reader, context );
             break;
           }
-          case SentinelIds.Sentinel_0107:
+          case SentinelIds.ObjectSubmeshData:
           {
-            obj.UnkSubmeshData = Data_0107.Deserialize( reader, context );
+            obj.SubmeshData = Data_0107.Deserialize( reader, context );
             break;
           }
-          case SentinelIds.Sentinel_011D:
+          case SentinelIds.ObjectBoundingBox:
           {
             _ = reader.ReadInt32();
             obj.BoundingBox = Box.Deserialize( reader, context );
             break;
           }
-          case SentinelIds.Sentinel_0115:
+          case SentinelIds.ObjectAffixes:
           {
             obj.Affixes = reader.ReadNullTerminatedString();
             break;
           }
-          case SentinelIds.Sentinel_0116:
+          case SentinelIds.ObjectSkinningData:
           {
             obj.SkinningData = Data_0116.Deserialize( reader, context );
             break;
@@ -123,7 +125,7 @@ namespace LibSaber.HaloCEA.Structures
             obj.Data_0123 = true;
             break;
           }
-          case SentinelIds.Sentinel_0129:
+          case SentinelIds.ObjectSharingObjectInfo:
           {
             obj.SharingObjectInfo = Data_0129.Deserialize( reader, context );
             break;
@@ -134,7 +136,7 @@ namespace LibSaber.HaloCEA.Structures
             obj.Data_012A = true;
             break;
           }
-          case SentinelIds.Sentinel_012B:
+          case SentinelIds.ObjectParentId:
           {
             obj.ParentId = reader.ReadInt32();
             break;
@@ -149,7 +151,7 @@ namespace LibSaber.HaloCEA.Structures
             obj.UnkMaterialData = Data_012F.Deserialize( reader, context );
             break;
           }
-          case SentinelIds.Sentinel_0130:
+          case SentinelIds.ObjectInterleavedBuffer:
           {
             obj.InterleavedDataBuffer = Data_0130.Deserialize( reader, context );
             break;
@@ -162,6 +164,7 @@ namespace LibSaber.HaloCEA.Structures
           }
           case SentinelIds.Sentinel_0135:
           {
+            // Disassembly suggests this will only be present if ObjectGeometryFlags.CompressedVertex is set
             obj.TranslationVectors = Data_0135.Deserialize( reader, context );
             break;
           }
@@ -172,22 +175,22 @@ namespace LibSaber.HaloCEA.Structures
           }
 
           // Object Sentinels =================================================
-          case SaberObjectSentinelIds.VertexBuffer:
+          case SaberObjectSentinelIds.ObjectVertexBuffer:
           {
             obj.Vertices = VertexBuffer.Deserialize( reader, context );
             break;
           }
-          case SaberObjectSentinelIds.FaceBuffer:
+          case SaberObjectSentinelIds.ObjectFaceBuffer:
           {
             obj.Faces = FaceBuffer.Deserialize( reader, context );
             break;
           }
-          case SaberObjectSentinelIds.Sentinel_00F8:
+          case SaberObjectSentinelIds.ObjectMaterialColor:
           {
             obj.MaterialColor = Vector4<byte>.Deserialize( reader, context );
             break;
           }
-          case SaberObjectSentinelIds.Matrix:
+          case SaberObjectSentinelIds.ObjectMatrix:
           {
             obj.Matrix = Matrix4<float>.Deserialize( reader, context );
             break;
@@ -230,15 +233,15 @@ namespace LibSaber.HaloCEA.Structures
     private static class SaberObjectSentinelIds
     {
       public const SentinelId Sentinel_00F0 = 0x00F0;
-      public const SentinelId VertexBuffer = 0x00F1;
-      public const SentinelId FaceBuffer = 0x00F2;
+      public const SentinelId ObjectVertexBuffer = 0x00F1;
+      public const SentinelId ObjectFaceBuffer = 0x00F2;
       public const SentinelId Sentinel_00F3 = 0x00F3;
       public const SentinelId Sentinel_00F4 = 0x00F4;
       public const SentinelId Sentinel_00F5 = 0x00F5;
       public const SentinelId Sentinel_00F6 = 0x00F6;
       public const SentinelId Sentinel_00F7 = 0x00F7;
-      public const SentinelId Sentinel_00F8 = 0x00F8;
-      public const SentinelId Matrix = 0x00F9;
+      public const SentinelId ObjectMaterialColor = 0x00F8;
+      public const SentinelId ObjectMatrix = 0x00F9;
       public const SentinelId Sentinel_00FA = 0x00FA;
       public const SentinelId Sentinel_00FB = 0x00FB;
       public const SentinelId Sentinel_00FC = 0x00FC;

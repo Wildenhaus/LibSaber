@@ -11,8 +11,8 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Data Members
 
-    public int Unk_00;
-    public int Unk_01;
+    public float Unk_00;
+    public float Unk_01;
 
     #endregion
 
@@ -22,8 +22,8 @@ namespace LibSaber.HaloCEA.Structures
     {
       var data = new Data_0285();
 
-      data.Unk_00 = reader.ReadInt32();
-      data.Unk_01 = reader.ReadInt32();
+      data.Unk_00 = reader.ReadFloat32();
+      data.Unk_01 = reader.ReadFloat32();
 
       return data;
     }

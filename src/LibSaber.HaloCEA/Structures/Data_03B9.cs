@@ -6,7 +6,7 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( SentinelIds.Sentinel_03B9 )]
+  [Sentinel( SentinelIds.ObjectInfo )]
   public class Data_03B9 : ISerialData<Data_03B9>
   {
 

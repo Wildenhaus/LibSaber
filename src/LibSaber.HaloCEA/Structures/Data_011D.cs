@@ -6,7 +6,7 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( SentinelIds.Sentinel_011D )]
+  [Sentinel( SentinelIds.ObjectBoundingBox )]
   public struct Data_011D : ISerialData<Data_011D>
   {
 

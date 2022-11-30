@@ -1,4 +1,5 @@
-﻿using LibSaber.IO;
+﻿using LibSaber.HaloCEA.Enumerations;
+using LibSaber.IO;
 using LibSaber.Serialization;
 using LibSaber.Shared.Attributes;
 using LibSaber.Shared.Structures;
@@ -6,7 +7,7 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( SentinelIds.Sentinel_0116 )]
+  [Sentinel( SentinelIds.ObjectSkinningData )]
   public struct Data_0116 : ISerialData<Data_0116>
   {
 
@@ -80,7 +81,7 @@ namespace LibSaber.HaloCEA.Structures
             var count = obj.ObjectInfo.VertexCount;
             var buffer = data.BoneWeights = new Vector4<float>[ count ];
 
-            if ( obj.GeometryFlags[ 5 ] )
+            if ( obj.GeometryFlags.HasFlag( ObjectGeometryFlags.UnkHasSingleWeight ) )
             {
               for ( var i = 0; i < count; i++ )
               {

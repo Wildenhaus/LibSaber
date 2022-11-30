@@ -12,11 +12,11 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Data Members
 
-    public string Unk_00;
-    public string Unk_01;
+    public string InstanceName;
+    public string TemplateName;
     public string Unk_02;
     public string Unk_03;
-    public Matrix4<float> Unk_04;
+    public Matrix4<float> Matrix;
 
     [Sentinel( SentinelIds.Sentinel_01BC )]
     public int Data_01BC;
@@ -35,11 +35,11 @@ namespace LibSaber.HaloCEA.Structures
       const int MAGIC_ANIS = 0x41494E53; // ANIS
       ASSERT( reader.ReadInt32() == MAGIC_ANIS, "Invalid ANIS magic." );
 
-      data.Unk_00 = reader.ReadNullTerminatedString();
-      data.Unk_01 = reader.ReadNullTerminatedString();
+      data.InstanceName = reader.ReadNullTerminatedString();
+      data.TemplateName = reader.ReadNullTerminatedString();
       data.Unk_02 = reader.ReadNullTerminatedString();
       data.Unk_03 = reader.ReadNullTerminatedString();
-      data.Unk_04 = Matrix4<float>.Deserialize( reader, context );
+      data.Matrix = Matrix4<float>.Deserialize( reader, context );
 
       var sentinelReader = new SentinelReader( reader );
       sentinelReader.Next();

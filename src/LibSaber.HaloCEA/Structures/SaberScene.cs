@@ -24,7 +24,7 @@ namespace LibSaber.HaloCEA.Structures
     public Data_0482 psSECTION;
 
     [Sentinel( SentinelIds.Sentinel_0484)]
-    public Data_0484 Data_0484;
+    public Data_0484 UnkPropTemplateReferences;
 
     [Sentinel( SaberSceneSentinelIds.ObjectList )]
     public SaberObjectList ObjectList;
@@ -32,11 +32,11 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( SentinelIds.Sentinel_01EA )]
     public Data_01EA TemplateList;
 
-    [Sentinel( SentinelIds.Sentinel_01B8 )]
-    public Data_01B8 Data_01B8;
+    [Sentinel( SentinelIds.SceneProps )]
+    public SaberPropsList Props;
 
-    [Sentinel( SentinelIds.Sentinel_0280 )]
-    public Data_0280 Data_0280;
+    [Sentinel( SentinelIds.SceneLights )]
+    public SaberLightsList Lights;
 
     [Sentinel( SentinelIds.Sentinel_0425 )]
     public byte[] Data_0425;
@@ -45,7 +45,7 @@ namespace LibSaber.HaloCEA.Structures
     public int Data_021D;
 
     [Sentinel( SentinelIds.Sentinel_021E )]
-    public Data_021E Data_021E;
+    public Data_021E Scripting;
 
     #endregion
 
@@ -67,8 +67,8 @@ namespace LibSaber.HaloCEA.Structures
             scene.TextureList = TextureList.Deserialize( reader, context );
             sentinelReader.BurnSentinel();
             break;
-          case SentinelIds.Sentinel_01B8:
-            scene.Data_01B8 = Data_01B8.Deserialize( reader, context );
+          case SentinelIds.SceneProps:
+            scene.Props = SaberPropsList.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_01EA:
             scene.TemplateList = Data_01EA.Deserialize( reader, context );
@@ -77,14 +77,14 @@ namespace LibSaber.HaloCEA.Structures
             scene.Data_021F = Data_021F.Deserialize( reader, context );
             sentinelReader.SetDelimiterFlag();
             break;
-          case SentinelIds.Sentinel_0280:
-            scene.Data_0280 = Data_0280.Deserialize( reader, context );
+          case SentinelIds.SceneLights:
+            scene.Lights = SaberLightsList.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_0482:
             scene.psSECTION = Data_0482.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_0484:
-            scene.Data_0484 = Data_0484.Deserialize( reader, context );
+            scene.UnkPropTemplateReferences = Data_0484.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_0425:
             scene.Data_0425 = new byte[ reader.ReadInt32() ];
@@ -94,7 +94,7 @@ namespace LibSaber.HaloCEA.Structures
             scene.Data_021D = reader.ReadInt32();
             break;
           case SentinelIds.Sentinel_021E:
-            scene.Data_021E = Data_021E.Deserialize( reader, context );
+            scene.Scripting = Data_021E.Deserialize( reader, context );
             break;
 
           case SaberSceneSentinelIds.ObjectList:

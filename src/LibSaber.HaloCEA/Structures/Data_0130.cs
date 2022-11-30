@@ -1,4 +1,6 @@
-﻿using LibSaber.IO;
+﻿using System.Diagnostics;
+using System.Text;
+using LibSaber.IO;
 using LibSaber.Serialization;
 using LibSaber.Shared.Attributes;
 using LibSaber.Shared.Structures;
@@ -6,7 +8,7 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( SentinelIds.Sentinel_0130 )]
+  [Sentinel( SentinelIds.ObjectInterleavedBuffer )]
   public struct Data_0130 : ISerialData<Data_0130>
   {
 

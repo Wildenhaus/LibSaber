@@ -10,17 +10,17 @@ using LibSaber.Shared.Attributes;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( SentinelIds.Sentinel_01B8 )]
-  public class Data_01B8 : List<Data_01B8_Entry>, ISerialData<Data_01B8>
+  [Sentinel( SentinelIds.SceneProps )]
+  public class SaberPropsList : List<Data_01B8_Entry>, ISerialData<SaberPropsList>
   {
 
     #region Constructor
 
-    public Data_01B8()
+    public SaberPropsList()
     {
     }
 
-    public Data_01B8( int capacity )
+    public SaberPropsList( int capacity )
       : base( capacity )
     {
     }
@@ -29,10 +29,10 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Serialization
 
-    public static Data_01B8 Deserialize( NativeReader reader, ISerializationContext context )
+    public static SaberPropsList Deserialize( NativeReader reader, ISerializationContext context )
     {
       var count = reader.ReadInt32();
-      var data = new Data_01B8( count );
+      var data = new SaberPropsList( count );
 
       for ( var i = 0; i < count; i++ )
         data.Add( Data_01B8_Entry.Deserialize( reader, context ) );
@@ -49,8 +49,8 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Data Members
 
-    public Data_01B9 Data_01B9;
-    public string Data_01BB;
+    public Data_01B9 PropInfo;
+    public string Affixes;
 
     #endregion
 
@@ -64,11 +64,11 @@ namespace LibSaber.HaloCEA.Structures
 
       sentinelReader.Next();
       ASSERT( sentinelReader.SentinelId == SentinelIds.Sentinel_01B9 );
-      data.Data_01B9 = Data_01B9.Deserialize( reader, context );
+      data.PropInfo = Data_01B9.Deserialize( reader, context );
 
       sentinelReader.Next();
       ASSERT( sentinelReader.SentinelId == SentinelIds.Sentinel_01BB );
-      data.Data_01BB = reader.ReadNullTerminatedString();
+      data.Affixes = reader.ReadNullTerminatedString();
 
       return data;
     }

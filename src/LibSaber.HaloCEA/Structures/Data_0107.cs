@@ -5,7 +5,7 @@ using LibSaber.Shared.Attributes;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  [Sentinel( SentinelIds.Sentinel_0107 )]
+  [Sentinel( SentinelIds.ObjectSubmeshData )]
   public struct Data_0107 : ISerialData<Data_0107>
   {
 

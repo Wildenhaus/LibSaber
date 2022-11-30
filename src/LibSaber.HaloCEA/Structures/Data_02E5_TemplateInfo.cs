@@ -40,7 +40,6 @@ namespace LibSaber.HaloCEA.Structures
       // TODO: Figure out what this is
       // Seems to always be an empty string?
       info.Unk_String = reader.ReadNullTerminatedString();
-
       if ( !string.IsNullOrWhiteSpace( info.Unk_String ) )
         System.Diagnostics.Debugger.Break();
 
