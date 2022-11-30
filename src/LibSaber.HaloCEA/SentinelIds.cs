@@ -10,7 +10,7 @@
     public const SentinelId Sentinel_0104 = 0x0104; // submesh data
     public const SentinelId Sentinel_0105 = 0x0105; // submesh face data
 
-    public const SentinelId Sentinel_0107 = 0x0107; // submesh list/container
+    public const SentinelId ObjectSubmeshData = 0x0107; // submesh list/container
     public const SentinelId Sentinel_0108 = 0x0108;
     public const SentinelId Sentinel_0109 = 0x0109;
     public const SentinelId Sentinel_010A = 0x010A;
@@ -22,15 +22,15 @@
     public const SentinelId Sentinel_0110 = 0x0110;
 
     public const SentinelId Sentinel_0114 = 0x0114; // unk material info
-    public const SentinelId Sentinel_0115 = 0x0115; // unk affixes
-    public const SentinelId Sentinel_0116 = 0x0116; // unk vertex bind container
+    public const SentinelId ObjectAffixes = 0x0115; // unk affixes
+    public const SentinelId ObjectSkinningData = 0x0116; // unk vertex bind container
     public const SentinelId Sentinel_0117 = 0x0117; // unk vertex bind data
     public const SentinelId Sentinel_0118 = 0x0118;
     public const SentinelId Sentinel_0119 = 0x0119;
     public const SentinelId Sentinel_011A = 0x011A; // unk vertex blend weight
     public const SentinelId Sentinel_011B = 0x011B;
     public const SentinelId Sentinel_011C = 0x011C; // unk submesh data
-    public const SentinelId Sentinel_011D = 0x011D; // mesh bounding box
+    public const SentinelId ObjectBoundingBox = 0x011D; // mesh bounding box
     public const SentinelId Sentinel_011E = 0x011E;
     public const SentinelId Sentinel_011F = 0x011F; // unk material data
     public const SentinelId Sentinel_0120 = 0x0120; // unk submesh data
@@ -42,13 +42,13 @@
     public const SentinelId Sentinel_0126 = 0x0126;
     public const SentinelId Sentinel_0127 = 0x0127;
     public const SentinelId Sentinel_0128 = 0x0128; // unk submesh data, same as 0138 but with two less fields
-    public const SentinelId Sentinel_0129 = 0x0129; // SharingObjectInfo
+    public const SentinelId ObjectSharingObjectInfo = 0x0129; // SharingObjectInfo
     public const SentinelId Sentinel_012A = 0x012A;
-    public const SentinelId Sentinel_012B = 0x012B; // parent id
+    public const SentinelId ObjectParentId = 0x012B; // parent id
     public const SentinelId Sentinel_012C = 0x012C; // object count
     public const SentinelId Sentinel_012E = 0x012E; // geometry flags
     public const SentinelId Sentinel_012F = 0x012F; // unk mesh material data
-    public const SentinelId Sentinel_0130 = 0x0130; // Interleaved Data Buffer (uv, tan, etc)
+    public const SentinelId ObjectInterleavedBuffer = 0x0130; // Interleaved Data Buffer (uv, tan, etc)
     public const SentinelId Sentinel_0131 = 0x0131;
     public const SentinelId Sentinel_0132 = 0x0132; // unk submesh transform?
     public const SentinelId Sentinel_0133 = 0x0133; // unk vertex blend indices?
@@ -62,8 +62,8 @@
     public const SentinelId TextureList = 0x0155; // texture list
     public const SentinelId TextureListEntry = 0x0156; // texture list entry
 
-    public const SentinelId Sentinel_01B8 = 0x01B8;
-    public const SentinelId Sentinel_01B9 = 0x01B9;
+    public const SentinelId SceneProps = 0x01B8; // ScenePropList
+    public const SentinelId Sentinel_01B9 = 0x01B9; // SceneProp
     public const SentinelId Sentinel_01BA = 0x01BA; // scripting?
     public const SentinelId Sentinel_01BB = 0x01BB;
     public const SentinelId Sentinel_01BC = 0x01BC;
@@ -82,7 +82,7 @@
     public const SentinelId Sentinel_0221 = 0x0221;
     public const SentinelId Sentinel_0222 = 0x0222;
 
-    public const SentinelId Sentinel_0280 = 0x0280;
+    public const SentinelId SceneLights = 0x0280; // Scene Lights List
 
     public const SentinelId Sentinel_0282 = 0x0282;
     public const SentinelId Sentinel_0283 = 0x0283;
@@ -97,7 +97,7 @@
     public const SentinelId Sentinel_028C = 0x028C;
 
     public const SentinelId Sentinel_02E4 = 0x02E4; // template
-    public const SentinelId Sentinel_02E5 = 0x02E5; // template info
+    public const SentinelId Sentinel_02E5 = 0x02E5; // template header
     public const SentinelId Sentinel_02E6 = 0x02E6; // animation sequence list
 
     public const SentinelId Sentinel_02E8 = 0x02E8; // object animation list
@@ -107,22 +107,22 @@
     public const SentinelId ObjectAnim_PScale = 0x02EC; // object animation scale spline
     public const SentinelId ObjectAnim_PVisibility = 0x02ED; // object animation visibility spline
 
-    public const SentinelId Sentinel_02F3 = 0x02F3; // AnimSeq.TimeSec?
-    public const SentinelId Sentinel_02F4 = 0x02F4; // AnimSeq.LenFrame?
+    public const SentinelId AnimationSequence_TimeSec = 0x02F3; // AnimSeq.TimeSec?
+    public const SentinelId AnimationSequence_LenFrame = 0x02F4; // AnimSeq.LenFrame?
 
     public const SentinelId ObjectAnim_IniTranslation = 0x02FA;  // object animation initial translation
     public const SentinelId ObjectAnim_IniRotation = 0x02FB; // object animation initial rotation
     public const SentinelId ObjectAnim_IniScale = 0x02FC; // object animation initial scale
     public const SentinelId AnimationSequence = 0x02FD; // AnimSeq
     public const SentinelId AnimationSequence_Name = 0x02FE; // AnimSeq.Name
-    public const SentinelId Sentinel_02FF = 0x02FF; // AnimSeq.StartFrame
-    public const SentinelId Sentinel_0300 = 0x0300; // AnimSeq.EndFrame
-    public const SentinelId Sentinel_0301 = 0x0301; // AnimSeq.OffsetFrame
+    public const SentinelId AnimationSequence_StartFrame = 0x02FF; // AnimSeq.StartFrame
+    public const SentinelId AnimationSequence_EndFrame = 0x0300; // AnimSeq.EndFrame
+    public const SentinelId AnimationSequence_OffsetFrame = 0x0301; // AnimSeq.OffsetFrame
 
-    public const SentinelId Sentinel_0304 = 0x0304; // more affixes?
+    public const SentinelId Sentinel_0304 = 0x0304; // export affixes?
     public const SentinelId Sentinel_0305 = 0x0305; // matrices. maybe MatrixLT for bones?
     public const SentinelId Sentinel_0306 = 0x0306;
-    public const SentinelId Sentinel_0307 = 0x0307; // AnimSeq.Bbox
+    public const SentinelId AnimationSequence_BoundingBox = 0x0307; // AnimSeq.Bbox
     public const SentinelId Sentinel_0308 = 0x0308; // Object bounding box
 
     public const SentinelId ObjectAnim_IniVisibility = 0x030A; // object animation initial visibility
@@ -158,7 +158,7 @@
     public const SentinelId Sentinel_03B7 = 0x03B7;
     public const SentinelId Sentinel_03B8 = 0x03B8;
 
-    public const SentinelId Sentinel_03B9 = 0x03B9; // Object Info
+    public const SentinelId ObjectInfo = 0x03B9; // Object Info
 
     public const SentinelId Sentinel_03C0 = 0x03C0; // Scene Guid?
 
