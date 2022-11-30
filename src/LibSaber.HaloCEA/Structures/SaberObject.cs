@@ -18,7 +18,7 @@ namespace LibSaber.HaloCEA.Structures
     public Data_03B9 ObjectInfo;
 
     [Sentinel( SentinelIds.ObjectSubmeshData )]
-    public Data_0107? SubmeshData;
+    public Data_0107 SubmeshData;
 
     [Sentinel( SentinelIds.ObjectBoundingBox )]
     public Box? BoundingBox;
@@ -48,7 +48,7 @@ namespace LibSaber.HaloCEA.Structures
     public Data_012F? UnkMaterialData;
 
     [Sentinel( SentinelIds.ObjectInterleavedBuffer )]
-    public Data_0130? InterleavedDataBuffer;
+    public InterleavedDataBuffer? InterleavedDataBuffer;
 
     [Sentinel( SentinelIds.Sentinel_0131 )]
     public bool Data_0131;
@@ -73,7 +73,7 @@ namespace LibSaber.HaloCEA.Structures
     public Matrix4<float>? Matrix;
 
     [Sentinel( SaberObjectSentinelIds.Sentinel_00FA )]
-    public int? UnkBoneId; // Bone ID?
+    public int? BoneId; // Bone ID?
 
     [Sentinel( SaberObjectSentinelIds.Sentinel_00FD )]
     public string? UnkScripting; // Scripting?
@@ -153,7 +153,7 @@ namespace LibSaber.HaloCEA.Structures
           }
           case SentinelIds.ObjectInterleavedBuffer:
           {
-            obj.InterleavedDataBuffer = Data_0130.Deserialize( reader, context );
+            obj.InterleavedDataBuffer = Structures.InterleavedDataBuffer.Deserialize( reader, context );
             break;
           }
           case SentinelIds.Sentinel_0131:
@@ -197,7 +197,7 @@ namespace LibSaber.HaloCEA.Structures
           }
           case SaberObjectSentinelIds.Sentinel_00FA:
           {
-            obj.UnkBoneId = reader.ReadInt32();
+            obj.BoneId = reader.ReadInt32();
             break;
           }
           case SaberObjectSentinelIds.Sentinel_00FD:
