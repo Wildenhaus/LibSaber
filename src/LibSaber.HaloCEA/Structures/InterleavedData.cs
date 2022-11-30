@@ -17,14 +17,14 @@ namespace LibSaber.HaloCEA.Structures
     public Vector4<float>? Tangent2;
     public Vector4<float>? Tangent3;
 
-    public Vector4<byte> Color0;
-    public Vector4<byte> Color1;
-    public Vector4<byte> Color2;
+    public Vector4<byte>? Color0;
+    public Vector4<byte>? Color1;
+    public Vector4<byte>? Color2;
 
-    public Vector3<float> UV0;
-    public Vector3<float> UV1;
-    public Vector3<float> UV2;
-    public Vector3<float> UV3;
+    public Vector3<float>? UV0;
+    public Vector3<float>? UV1;
+    public Vector3<float>? UV2;
+    public Vector3<float>? UV3;
 
     public static InterleavedData Deserialize( NativeReader reader, ISerializationContext context )
     {
