@@ -19,7 +19,7 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( SentinelIds.Sentinel_0120 )] public Data_0120? Sentinel_0120;
     [Sentinel( SentinelIds.Sentinel_0128 )] public Data_0128? Sentinel_0128;
     [Sentinel( SentinelIds.Sentinel_0132 )] public Data_0132? Sentinel_0132;
-    [Sentinel( SentinelIds.Sentinel_0134 )] public short? SkinCompoundId;
+    [Sentinel( SentinelIds.Sentinel_0134 )] public short SkinCompoundId;
     [Sentinel( SentinelIds.Sentinel_0138 )] public Data_0138? Sentinel_0138;
 
 
