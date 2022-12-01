@@ -11,7 +11,7 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Data Members
 
-    public int Unk_00; // material id?
+    public int UnkMaterialIndex; // material id?
     public int Unk_01;
     public byte Unk_02;
     public byte Unk_03;
@@ -24,7 +24,7 @@ namespace LibSaber.HaloCEA.Structures
     {
       return new Data_010E
       {
-        Unk_00 = reader.ReadInt32(),
+        UnkMaterialIndex = reader.ReadInt32(),
         Unk_01 = reader.ReadInt32(),
         Unk_02 = reader.ReadByte(),
         Unk_03 = reader.ReadByte(),
