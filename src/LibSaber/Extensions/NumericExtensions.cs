@@ -12,6 +12,9 @@ namespace LibSaber.Extensions
     public static float SNormToFloat( this short snormValue )
       => snormValue / SNorm16.Coefficient;
 
+    public static float UNormToFloat( this byte unormValue )
+      => unormValue / ( float ) byte.MaxValue; // TODO
+
   }
 
 }
