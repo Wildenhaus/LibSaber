@@ -11,8 +11,8 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Data Members
 
-    public short UnkObjId01;
-    public byte Unk_01;
+    public short FirstDependentObjectId;
+    public byte DependentObjectCount;
     public short UnkObjId02;
     public byte Unk_03;
 
@@ -24,8 +24,16 @@ namespace LibSaber.HaloCEA.Structures
     {
       var data = new Data_0132();
 
-      data.UnkObjId01 = reader.ReadInt16();
-      data.Unk_01 = reader.ReadByte();
+      /*  FirstDependentObjectId is the Id of the first object that will use this
+       *  object's geometry data. 
+       *  DependentObjectCount is the number of objects that also use this object's
+       *  data. The other dependent object Ids are sequential, so if the count is 5,
+       *  the next 5 Ids will also be dependent objects.
+       */
+      data.FirstDependentObjectId = reader.ReadInt16();
+      data.DependentObjectCount = reader.ReadByte();
+
+      // Guessing this is dependencies?
       data.UnkObjId02 = reader.ReadInt16();
       data.Unk_03 = reader.ReadByte();
 
