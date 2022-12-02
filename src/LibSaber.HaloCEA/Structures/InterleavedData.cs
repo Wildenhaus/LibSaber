@@ -85,6 +85,10 @@ namespace LibSaber.HaloCEA.Structures
     {
       if ( flags[ InterleavedDataFlags._COL0 ] )
         data.Color0 = ReadColor( reader, flags );
+      if ( flags[ InterleavedDataFlags._COL1 ] )
+        data.Color1 = ReadColor( reader, flags );
+      if ( flags[ InterleavedDataFlags._COL2 ] )
+        data.Color2 = ReadColor( reader, flags );
     }
 
     private static Vector4<byte> ReadColor( NativeReader reader, BitSet<short> flags )
