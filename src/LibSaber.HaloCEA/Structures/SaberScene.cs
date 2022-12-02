@@ -27,7 +27,7 @@ namespace LibSaber.HaloCEA.Structures
     public Data_0484 UnkPropTemplateReferences;
 
     [Sentinel( SaberSceneSentinelIds.ObjectList )]
-    public SaberObjectList ObjectList;
+    public SaberObjectList Objects;
 
     [Sentinel( SentinelIds.Sentinel_01EA )]
     public Data_01EA TemplateList;
@@ -98,7 +98,7 @@ namespace LibSaber.HaloCEA.Structures
             break;
 
           case SaberSceneSentinelIds.ObjectList:
-            scene.ObjectList = SaberObjectList.Deserialize( reader, context );
+            scene.Objects = SaberObjectList.Deserialize( reader, context );
             sentinelReader.BurnSentinel();
             break;
 
