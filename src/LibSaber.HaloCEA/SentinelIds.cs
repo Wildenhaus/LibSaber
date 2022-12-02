@@ -47,7 +47,7 @@
     public const SentinelId ObjectParentId = 0x012B; // parent id
     public const SentinelId Sentinel_012C = 0x012C; // object count
     public const SentinelId Sentinel_012E = 0x012E; // geometry flags
-    public const SentinelId Sentinel_012F = 0x012F; // unk mesh material data
+    public const SentinelId ObjectUvScaling = 0x012F; // unk mesh material data
     public const SentinelId ObjectInterleavedBuffer = 0x0130; // Interleaved Data Buffer (uv, tan, etc)
     public const SentinelId Sentinel_0131 = 0x0131;
     public const SentinelId Sentinel_0132 = 0x0132; // unk submesh transform?

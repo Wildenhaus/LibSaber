@@ -44,8 +44,8 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( SentinelIds.Sentinel_012E )]
     public BitSet<short> GeometryFlags;
 
-    [Sentinel( SentinelIds.Sentinel_012F )]
-    public Data_012F? UnkMaterialData;
+    [Sentinel( SentinelIds.ObjectUvScaling )]
+    public UvScalingMap? UvScaling;
 
     [Sentinel( SentinelIds.ObjectInterleavedBuffer )]
     public InterleavedDataBuffer? InterleavedDataBuffer;
@@ -146,9 +146,9 @@ namespace LibSaber.HaloCEA.Structures
             obj.GeometryFlags = BitSet<short>.Deserialize( reader, context );
             break;
           }
-          case SentinelIds.Sentinel_012F:
+          case SentinelIds.ObjectUvScaling:
           {
-            obj.UnkMaterialData = Data_012F.Deserialize( reader, context );
+            obj.UvScaling = UvScalingMap.Deserialize( reader, context );
             break;
           }
           case SentinelIds.ObjectInterleavedBuffer:
