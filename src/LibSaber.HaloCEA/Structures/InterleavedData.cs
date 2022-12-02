@@ -26,6 +26,13 @@ namespace LibSaber.HaloCEA.Structures
     public Vector3<float>? UV2;
     public Vector3<float>? UV3;
 
+    public float? UnkUvDeltaU;
+    public float? UnkUvDeltaV;
+
+    #endregion
+
+    #region Serialization
+
     public static InterleavedData Deserialize( NativeReader reader, ISerializationContext context )
     {
       var buffer = context.GetMostRecentObject<InterleavedDataBuffer>();
@@ -111,6 +118,11 @@ namespace LibSaber.HaloCEA.Structures
         data.UV2 = ReadUV( reader, flags[ InterleavedDataFlags._COMPRESSED_TEX_2 ] );
       if ( flags[ InterleavedDataFlags._TEX3 ] )
         data.UV3 = ReadUV( reader, flags[ InterleavedDataFlags._COMPRESSED_TEX_3 ] );
+
+      if ( flags[ InterleavedDataFlags.Unk_0A ] )
+        data.UnkUvDeltaU = reader.ReadInt16().SNormToFloat();
+      if ( flags[ InterleavedDataFlags.Unk_0B ] )
+        data.UnkUvDeltaV = reader.ReadInt16().SNormToFloat();
     }
 
     private static Vector3<float> ReadUV( NativeReader reader, bool isCompressed )
