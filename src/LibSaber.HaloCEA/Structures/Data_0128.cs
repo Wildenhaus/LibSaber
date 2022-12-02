@@ -17,16 +17,16 @@ namespace LibSaber.HaloCEA.Structures
     public byte Unk_04;
     public byte Unk_05;
     public byte Unk_06;
-    public byte Unk_07;
+    public byte UnkType;
     public byte Unk_08;
+    public short UnkVertexCount;
     public short Unk_09;
-    public short Unk_0A;
     public int Unk_0B;
 
     public int Unk_0E;
     public int Unk_0F;
     public byte Unk_10;
-    public byte Unk_11;
+    public byte NumberOfDependents;
     public byte Unk_12;
     public byte Unk_13;
 
@@ -44,16 +44,16 @@ namespace LibSaber.HaloCEA.Structures
       data.Unk_04 = reader.ReadByte();
       data.Unk_05 = reader.ReadByte();
       data.Unk_06 = reader.ReadByte();
-      data.Unk_07 = reader.ReadByte();
+      data.UnkType = reader.ReadByte(); // 0x10 = mesh? 0x12 = skin? 0x13 = skincompound
       data.Unk_08 = reader.ReadByte();
-      data.Unk_09 = reader.ReadInt16();
-      data.Unk_0A = reader.ReadInt16();
+      data.UnkVertexCount = reader.ReadInt16();
+      data.Unk_09 = reader.ReadInt16(); // face count * 3?
       data.Unk_0B = reader.ReadInt32();
 
       data.Unk_0E = reader.ReadInt32();
       data.Unk_0F = reader.ReadInt32();
       data.Unk_10 = reader.ReadByte();
-      data.Unk_11 = reader.ReadByte();
+      data.NumberOfDependents = reader.ReadByte();
       data.Unk_12 = reader.ReadByte();
       data.Unk_13 = reader.ReadByte();
 

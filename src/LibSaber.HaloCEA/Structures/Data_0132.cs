@@ -13,8 +13,8 @@ namespace LibSaber.HaloCEA.Structures
 
     public short FirstDependentObjectId;
     public byte DependentObjectCount;
-    public short UnkObjId02;
-    public byte Unk_03;
+    public short UnkFirstParentBoneId;
+    public byte UnkParentBoneCount;
 
     #endregion
 
@@ -33,9 +33,8 @@ namespace LibSaber.HaloCEA.Structures
       data.FirstDependentObjectId = reader.ReadInt16();
       data.DependentObjectCount = reader.ReadByte();
 
-      // Guessing this is dependencies?
-      data.UnkObjId02 = reader.ReadInt16();
-      data.Unk_03 = reader.ReadByte();
+      data.UnkFirstParentBoneId = reader.ReadInt16();
+      data.UnkParentBoneCount = reader.ReadByte();
 
       return data;
     }

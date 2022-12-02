@@ -18,7 +18,7 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( SentinelIds.Sentinel_011C )] public Data_011C? Sentinel_011C;
     [Sentinel( SentinelIds.Sentinel_0120 )] public Data_0120? Sentinel_0120;
     [Sentinel( SentinelIds.Sentinel_0128 )] public Data_0128? Sentinel_0128;
-    [Sentinel( SentinelIds.Sentinel_0132 )] public Data_0132? Sentinel_0132;
+    [Sentinel( SentinelIds.Sentinel_0132 )] public Data_0132? DependencyInfo;
     [Sentinel( SentinelIds.Sentinel_0134 )] public short? SkinCompoundId;
     [Sentinel( SentinelIds.Sentinel_0138 )] public Data_0138? Sentinel_0138;
 
@@ -55,7 +55,7 @@ namespace LibSaber.HaloCEA.Structures
             data.Sentinel_0128 = Data_0128.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_0132:
-            data.Sentinel_0132 = Data_0132.Deserialize( reader, context );
+            data.DependencyInfo = Data_0132.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_0134:
             data.SkinCompoundId = reader.ReadInt16();
