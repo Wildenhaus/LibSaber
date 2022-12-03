@@ -13,9 +13,9 @@ namespace LibSaber.HaloCEA.Structures
 
     public int Unk_00;
     public int Unk_01;
-    public byte[] Unk_02;
-    public byte[] Unk_03;
-    public byte[] Unk_04;
+    public int[] Unk_02;
+    public short[] Unk_03;
+    public int[] Unk_04;
 
     #endregion
 
@@ -28,19 +28,22 @@ namespace LibSaber.HaloCEA.Structures
       data.Unk_00 = reader.ReadInt32();
       data.Unk_01 = reader.ReadInt32();
 
-      var parentData = context.GetMostRecentObject<Data_0221>();
+      var data_0221 = context.GetMostRecentObject<Data_0221>();
 
-      var unk_02_size = ( parentData.Unk_01 + 1 ) * 4;
-      data.Unk_02 = new byte[ unk_02_size ];
-      reader.Read( data.Unk_02 );
+      var unk_02_count = data_0221.Unk_01 + 1;
+      data.Unk_02 = new int[ unk_02_count ];
+      for ( var i = 0; i < data.Unk_02.Length; i++ )
+        data.Unk_02[ i ] = reader.ReadInt32();
 
-      var unk_03_size = data.Unk_01 * 2;
-      data.Unk_03 = new byte[ unk_03_size ];
-      reader.Read( data.Unk_03 );
+      var unk_03_count = data.Unk_01;
+      data.Unk_03 = new short[ unk_03_count ];
+      for ( var i = 0; i < data.Unk_03.Length; i++ )
+        data.Unk_03[ i ] = reader.ReadInt16();
 
-      var unk_04_size = ( parentData.Unk_00 + 1 ) * 4;
-      data.Unk_04 = new byte[ unk_04_size ];
-      reader.Read( data.Unk_04 );
+      var unk_04_count = data_0221.Unk_00 + 1;
+      data.Unk_04 = new int[ unk_04_count ];
+      for ( var i = 0; i < data.Unk_04.Length; i++ )
+        data.Unk_04[ i ] = reader.ReadInt32();
 
       return data;
     }

@@ -13,7 +13,8 @@ namespace LibSaber.HaloCEA.Structures
 
     public int Unk_00;
     public int Unk_01;
-    public byte[] Unk_02;
+    public int[] Unk_02;
+    public short[] Unk_03;
 
     #endregion
 
@@ -36,21 +37,17 @@ namespace LibSaber.HaloCEA.Structures
       data.Unk_00 = reader.ReadInt32();
       data.Unk_01 = reader.ReadInt32();
 
-      var unkParent = context.GetMostRecentObject<Data_0220>();
-      var elemCount = unkParent.Unk_00.X * unkParent.Unk_00.Y * unkParent.Unk_00.Z;
-      var unk_02_size = ( elemCount + 1 ) * 4;
-      data.Unk_02 = new byte[ unk_02_size ];
-      reader.Read( data.Unk_02 );
+      var data_0220 = context.GetMostRecentObject<Data_0220>();
+      var vectorProduct = data_0220.Unk_00.X * data_0220.Unk_00.Y * data_0220.Unk_00.Z;
 
-      /* There's another call that reads 2-byte elements into another array.
-       * 
-       * The allocation for that data is in Inversion.exe+0xD4A520.
-       * It's doing a bunch of weird bit shifting. Might be related to flags?
-       * The deserialization function for this sentinel group is inside of a chain
-       * of virtual calls that I don't care to try and follow right now.
-       * 
-       * Skipping for now, but I'll revisit this if it's an issue.
-       */
+      var unk_02_count = vectorProduct + 1;
+      data.Unk_02 = new int[ unk_02_count ];
+      for ( var i = 0; i < unk_02_count; i++ )
+        data.Unk_02[ i ] = reader.ReadInt32();
+
+      data.Unk_03 = new short[ data.Unk_01 ];
+      for ( var i = 0; i < data.Unk_03.Length; i++ )
+        data.Unk_03[ i ] = reader.ReadInt16();
 
       context.AddObject( data );
       return data;
