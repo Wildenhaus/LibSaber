@@ -1,19 +1,21 @@
-﻿using LibSaber.HaloCEA.Structures;
+﻿using LibSaber.HaloCEA.Enumerations;
+using LibSaber.HaloCEA.Files;
+using LibSaber.HaloCEA.Structures;
 using LibSaber.IO;
 using LibSaber.Serialization;
 
-namespace LibSaber.HaloCEA.Tests
+namespace LibSaber.HaloCEA.Tests.Serialization
 {
 
-  public class SceneSerializationTests : TestBase
+  public class SceneSerializationTests : SerializationTestBase
   {
 
     [Theory]
-    [MemberData( nameof( GetFilePathsWithExtension ), parameters: ".Scene" )]
-    public void TestSceneSerialization( string filePath )
+    [MemberData( nameof( GetS3DPakFilesOfType ), parameters: CEAFileType.Scene )]
+    public void TestSceneSerialization( S3DPakFileEntry file )
     {
       //== Arrange ==============================
-      var stream = File.OpenRead( filePath );
+      var stream = file.GetStream();
       var reader = new NativeReader( stream, Endianness.LittleEndian );
 
       //== Act ==================================

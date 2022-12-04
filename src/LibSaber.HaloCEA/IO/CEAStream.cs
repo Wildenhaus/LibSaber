@@ -180,17 +180,17 @@ namespace LibSaber.HaloCEA.IO
 
     public override void Write( byte[] buffer, int offset, int count )
     {
-      throw new NotImplementedException();
+      throw new NotSupportedException();
     }
 
     public override void SetLength( long value )
     {
-      throw new NotImplementedException();
+      throw new NotSupportedException();
     }
 
     public override void Flush()
     {
-      throw new NotImplementedException();
+      throw new NotSupportedException();
     }
 
     #endregion
@@ -199,7 +199,7 @@ namespace LibSaber.HaloCEA.IO
 
     private void Initialize()
     {
-      if ( _compressionInfo.UncompressedLength == 0 )
+      if ( !_compressionInfo.IsInitialized )
         InitializeCompressionInfo();
 
       _position = 0;

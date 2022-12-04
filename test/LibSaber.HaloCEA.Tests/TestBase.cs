@@ -12,7 +12,7 @@ namespace LibSaber.HaloCEA.Tests
       extension = Regex.Replace( extension, "[*.]", "" );
       extension = "*." + extension;
 
-      var files = Directory.EnumerateFiles( TestConfig.ExtractedAssetsPath, extension, SearchOption.AllDirectories );
+      var files = Directory.EnumerateFiles( TestConfig.CEA_INSTALL_PATH, extension, SearchOption.AllDirectories );
       foreach ( var file in files )
         yield return new object[] { file };
     }

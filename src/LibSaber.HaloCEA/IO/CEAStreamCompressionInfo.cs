@@ -9,6 +9,7 @@
 
     #region Properties
 
+    public bool IsInitialized { get; set; }
     public int ChunkCount => Chunks.Length;
 
     #endregion
@@ -32,6 +33,7 @@
     public CEAStreamCompressionInfo( CEAStreamChunk[] chunks )
     {
       Chunks = chunks;
+      IsInitialized = true;
 
       // Calculate the uncompressed length
       var length = 0l;
