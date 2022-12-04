@@ -121,7 +121,7 @@ namespace LibSaber.HaloCEA.Structures
             template.LodDefinitions = Data_0311.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_0312:
-            template.Sentinel_0312 = reader.ReadPascalString32();
+            template.Sentinel_0312 = reader.ReadLengthPrefixedString32();
             break;
           case SentinelIds.Sentinel_0313:
             template.Sentinel_0313 = DataList<Data_0313>.Deserialize( reader, context );

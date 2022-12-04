@@ -123,10 +123,10 @@ namespace LibSaber.IO
       return sb.ToString();
     }
 
-    public string ReadPascalString16()
+    public string ReadLengthPrefixedString16()
       => ReadFixedLengthString( ReadUnmanaged<Int16>() );
 
-    public string ReadPascalString32()
+    public string ReadLengthPrefixedString32()
       => ReadFixedLengthString( ReadUnmanaged<Int32>() );
 
     public void Seek( long offset, SeekOrigin origin = SeekOrigin.Begin )

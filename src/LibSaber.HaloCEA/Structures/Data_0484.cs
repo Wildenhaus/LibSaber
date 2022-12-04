@@ -56,8 +56,8 @@ namespace LibSaber.HaloCEA.Structures
     {
       var data = new Data_0484_Entry();
 
-      data.TypeName = reader.ReadPascalString32();
-      data.TemplateName = reader.ReadPascalString32();
+      data.TypeName = reader.ReadLengthPrefixedString32();
+      data.TemplateName = reader.ReadLengthPrefixedString32();
       data.Unk_Id = reader.ReadInt16();
 
       return data;

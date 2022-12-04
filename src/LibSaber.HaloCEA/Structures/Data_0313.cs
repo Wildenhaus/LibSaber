@@ -24,7 +24,7 @@ namespace LibSaber.HaloCEA.Structures
     {
       var data = new Data_0313();
 
-      data.Unk_00 = reader.ReadPascalString32();
+      data.Unk_00 = reader.ReadLengthPrefixedString32();
 
       var count = data.Unk_01 = reader.ReadInt32();
       var havokData = data.HavokData = new byte[ count ];

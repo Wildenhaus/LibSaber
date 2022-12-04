@@ -25,7 +25,7 @@ namespace LibSaber.HaloCEA.Structures
       {
         Unk_00 = reader.ReadByte(),
         Frame = reader.ReadInt32(),
-        Comment = reader.ReadPascalString32(),
+        Comment = reader.ReadLengthPrefixedString32(),
       };
     }
 

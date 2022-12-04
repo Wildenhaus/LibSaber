@@ -45,7 +45,7 @@ namespace LibSaber.HaloCEA.Files
       var entry = new S3DPakFileEntry( this );
       entry.StartOffset = reader.ReadInt32();
       entry.SizeInBytes = reader.ReadInt32();
-      entry.Name = reader.ReadPascalString32();
+      entry.Name = reader.ReadLengthPrefixedString32();
       entry.Type = ( CEAFileType ) reader.ReadInt32();
       var unk_00 = reader.ReadInt64();
 
