@@ -19,11 +19,11 @@ namespace LibSaber.HaloCEA.Structures
     [Sentinel( SentinelIds.Sentinel_021F )]
     public Data_021F Data_021F;
 
-    [Sentinel( SentinelIds.Sentinel_0482)]
+    [Sentinel( SentinelIds.Sentinel_0482 )]
     [SaberInternalName( "psSECTION" )]
     public Data_0482 psSECTION;
 
-    [Sentinel( SentinelIds.Sentinel_0484)]
+    [Sentinel( SentinelIds.Sentinel_0484 )]
     public Data_0484 UnkPropTemplateReferences;
 
     [Sentinel( SaberSceneSentinelIds.ObjectList )]
