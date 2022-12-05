@@ -8,7 +8,7 @@ namespace LibSaber.HaloCEA.Structures
 
   [Sentinel( SentinelIds.ObjectAnim )]
   [SaberInternalName( "animOBJ_ANIM" )]
-  public struct ObjectAnimation : ISerialData<ObjectAnimation>
+  public struct ObjectAnimation
   {
 
     #region Data Members

@@ -4,7 +4,7 @@ using LibSaber.Serialization;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public struct LodDefinition : ISerialData<LodDefinition>
+  public struct LodDefinition
   {
 
     public short ObjectId;

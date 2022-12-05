@@ -6,7 +6,7 @@ namespace LibSaber.Shared.Structures
 {
 
   [SaberInternalName( "m3d::BOX" )]
-  public readonly struct Box : ISerialData<Box>
+  public readonly struct Box
   {
 
     #region Data Members
@@ -30,8 +30,8 @@ namespace LibSaber.Shared.Structures
 
     public static Box Deserialize( NativeReader reader, ISerializationContext context )
     {
-      var min = Vector3<float>.Deserialize(reader, context);
-      var max = Vector3<float>.Deserialize(reader, context);
+      var min = Vector3<float>.Deserialize( reader, context );
+      var max = Vector3<float>.Deserialize( reader, context );
 
       return new Box( min, max );
     }

@@ -6,7 +6,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.Sentinel_0132 )]
-  public struct Data_0132 : ISerialData<Data_0132>
+  public struct Data_0132
   {
 
     #region Data Members

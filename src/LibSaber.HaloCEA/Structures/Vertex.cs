@@ -15,10 +15,6 @@ namespace LibSaber.HaloCEA.Structures
 
     #region Constructor
 
-    public Vertex()
-    {
-    }
-
     public Vertex( Vector3<float> position, Vector3<float> normal )
     {
       Position = position;

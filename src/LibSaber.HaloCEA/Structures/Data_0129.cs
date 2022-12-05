@@ -7,7 +7,7 @@ namespace LibSaber.HaloCEA.Structures
 
 
   [Sentinel( SentinelIds.ObjectSharingObjectInfo )]
-  public class Data_0129 : ISerialData<Data_0129>
+  public class Data_0129
   {
 
     #region Data Members

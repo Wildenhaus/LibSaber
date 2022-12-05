@@ -6,7 +6,7 @@ namespace LibSaber.Shared.Structures
 {
 
   [SaberInternalName( "m3d::SPL" )]
-  public struct SplineData<TOffset> : ISerialData<SplineData<TOffset>>
+  public struct SplineData<TOffset>
     where TOffset : unmanaged, IConvertible
   {
 
@@ -20,7 +20,7 @@ namespace LibSaber.Shared.Structures
     /// <summary>
     ///   The type of the spline.
     /// </summary>
-    [Sentinel(0x00F0)]
+    [Sentinel( 0x00F0 )]
     public SplineType Type;
 
     /// <summary>
@@ -30,28 +30,28 @@ namespace LibSaber.Shared.Structures
     ///   If this value is 0, the data elements are uncompressed float values.
     ///   If this value is 2, the data elements are probably SNorm16 compressed.
     /// </remarks>
-    [Sentinel(0x00F1)]
+    [Sentinel( 0x00F1 )]
     public byte CompressedDataSize;
 
-    [Sentinel(0x00F2)]
+    [Sentinel( 0x00F2 )]
     public byte Sentinel_00F2; // Dimension X?
 
-    [Sentinel(0x00F3)]
+    [Sentinel( 0x00F3 )]
     public byte Sentinel_00F3; // Dimension Y?
 
-    [Sentinel(0x00F4)]
+    [Sentinel( 0x00F4 )]
     public int Sentinel_00F4; // Count?
 
     /// <summary>
     ///   The size of the data array in bytes.
     /// </summary>
-    [Sentinel(0x00F5)]
+    [Sentinel( 0x00F5 )]
     public int DataSizeInBytes;
 
     /// <summary>
     ///   The raw spline data.
     /// </summary>
-    [Sentinel(0x00F6)]
+    [Sentinel( 0x00F6 )]
     public byte[] Data;
 
     #endregion
@@ -64,7 +64,7 @@ namespace LibSaber.Shared.Structures
 
       splineData.Data_00 = reader.ReadInt32(); // Unknown
 
-      var sentinelReader = new SentinelReader<TOffset>(reader);
+      var sentinelReader = new SentinelReader<TOffset>( reader );
       while ( sentinelReader.Next() )
       {
         switch ( sentinelReader.SentinelId )
@@ -88,7 +88,7 @@ namespace LibSaber.Shared.Structures
             splineData.DataSizeInBytes = reader.ReadInt32();
             break;
           case 0x00F6:
-            var dataBuffer = splineData.Data = new byte[splineData.DataSizeInBytes];
+            var dataBuffer = splineData.Data = new byte[ splineData.DataSizeInBytes ];
             reader.Read( dataBuffer );
             break;
 

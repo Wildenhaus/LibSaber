@@ -4,7 +4,7 @@ using LibSaber.Serialization;
 namespace LibSaber.Shared.Structures
 {
 
-  public readonly struct Matrix4<T> : ISerialData<Matrix4<T>>
+  public readonly struct Matrix4<T>
   where T : unmanaged
   {
 
@@ -57,10 +57,10 @@ namespace LibSaber.Shared.Structures
 
     public static Matrix4<T> Deserialize( NativeReader reader, ISerializationContext context )
     {
-      var m1 = Vector4<T>.Deserialize(reader, context);
-      var m2 = Vector4<T>.Deserialize(reader, context);
-      var m3 = Vector4<T>.Deserialize(reader, context);
-      var m4 = Vector4<T>.Deserialize(reader, context);
+      var m1 = Vector4<T>.Deserialize( reader, context );
+      var m2 = Vector4<T>.Deserialize( reader, context );
+      var m3 = Vector4<T>.Deserialize( reader, context );
+      var m4 = Vector4<T>.Deserialize( reader, context );
 
       return new Matrix4<T>( m1, m2, m3, m4 );
     }

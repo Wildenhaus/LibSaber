@@ -6,7 +6,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.ObjectUvScaling )]
-  public class UvScalingMap : Dictionary<int, int>, ISerialData<UvScalingMap>
+  public class UvScalingMap : Dictionary<int, int>
   {
 
     /* This is a dictionary that represents how UV channels should be scaled.

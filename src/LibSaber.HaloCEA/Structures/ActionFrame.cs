@@ -6,7 +6,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.AnimationSequence_ActionFrames )]
-  public struct ActionFrame : ISerialData<ActionFrame>
+  public struct ActionFrame
   {
 
     #region Data Members

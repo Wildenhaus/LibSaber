@@ -6,7 +6,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.ObjectSubmeshData )]
-  public class Data_0107 : ISerialData<Data_0107>
+  public class Data_0107
   {
 
     #region Data Members
@@ -41,14 +41,14 @@ namespace LibSaber.HaloCEA.Structures
             ASSERT( data.UnkSubmeshList is null, "Duplicate submesh data." );
 #endif
             data.SubmeshListSentinel = sentinelReader.SentinelId;
-            data.UnkSubmeshList = DataList<Data_0104_0137>.Deserialize( reader, context );
+            data.UnkSubmeshList = DataList<Data_0104_0137>.Deserialize( reader, context, Data_0104_0137.Deserialize );
             break;
           case SentinelIds.Sentinel_0109:
-            data.Sentinel_0109 = DataList<Data_0108>.Deserialize( reader, context );
+            data.Sentinel_0109 = DataList<Data_0108>.Deserialize( reader, context, Data_0108.Deserialize );
             break;
 
           case 0x00F3:
-            data.Sentinel_00F3 = DataList<Data_0107_00F3>.Deserialize( reader, context );
+            data.Sentinel_00F3 = DataList<Data_0107_00F3>.Deserialize( reader, context, Data_0107_00F3.Deserialize );
             break;
 
 

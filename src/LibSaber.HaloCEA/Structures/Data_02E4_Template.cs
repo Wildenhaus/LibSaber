@@ -7,7 +7,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.Sentinel_02E4 )]
-  public class Data_02E4 : ISerialData<Data_02E4>
+  public class Data_02E4
   {
 
     #region Data Members
@@ -124,7 +124,7 @@ namespace LibSaber.HaloCEA.Structures
             template.Sentinel_0312 = reader.ReadLengthPrefixedString32();
             break;
           case SentinelIds.Sentinel_0313:
-            template.Sentinel_0313 = DataList<Data_0313>.Deserialize( reader, context );
+            template.Sentinel_0313 = DataList<Data_0313>.Deserialize( reader, context, Data_0313.Deserialize );
             break;
 
           case CEATemplateSentinels.ObjectList:

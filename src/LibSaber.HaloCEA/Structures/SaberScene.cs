@@ -5,7 +5,7 @@ using LibSaber.Shared.Attributes;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public class SaberScene : ISerialData<SaberScene>
+  public class SaberScene
   {
 
     #region Data Members

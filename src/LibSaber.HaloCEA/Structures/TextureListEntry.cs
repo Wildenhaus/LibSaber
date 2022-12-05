@@ -6,7 +6,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.TextureListEntry )]
-  public struct TextureListEntry : ISerialData<TextureListEntry>
+  public struct TextureListEntry
   {
 
     #region Data Members

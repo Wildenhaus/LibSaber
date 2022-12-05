@@ -7,7 +7,7 @@ namespace LibSaber.Shared.Structures
 {
 
   [StructLayout( LayoutKind.Explicit, Size = sizeof( short ) )]
-  public readonly struct SNorm16 : ISerialData<SNorm16>
+  public readonly struct SNorm16
   {
 
     #region Constants

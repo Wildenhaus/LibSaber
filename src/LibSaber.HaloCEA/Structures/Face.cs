@@ -14,10 +14,6 @@
 
     #region Constructor
 
-    public Face()
-    {
-    }
-
     public Face( short a, short b, short c )
     {
       A = a;

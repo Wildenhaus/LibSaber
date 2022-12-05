@@ -4,7 +4,7 @@ using LibSaber.Serialization;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public class FaceBuffer : List<Face>, ISerialData<FaceBuffer>
+  public class FaceBuffer : List<Face>
   {
 
     #region Constructor

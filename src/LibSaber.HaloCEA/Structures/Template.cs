@@ -5,7 +5,7 @@ using LibSaber.Shared.Attributes;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public class Template : ISerialData<Template>
+  public class Template
   {
 
     #region Data Members

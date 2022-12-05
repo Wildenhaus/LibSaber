@@ -8,7 +8,7 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public class SaberObject : ISerialData<SaberObject>
+  public class SaberObject
   {
 
     #region Data Members

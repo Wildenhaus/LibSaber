@@ -7,7 +7,7 @@ namespace LibSaber.HaloCEA.Structures
 
   [Sentinel( SentinelIds.Sentinel_0104 )]
   [Sentinel( SentinelIds.Sentinel_0137 )]
-  public struct Data_0104_0137 : ISerialData<Data_0104_0137>
+  public struct Data_0104_0137
   {
 
     #region Data Members
@@ -40,7 +40,7 @@ namespace LibSaber.HaloCEA.Structures
             data.UnkFaceData = Data_0105.Deserialize( reader, context );
             break;
           case SentinelIds.Sentinel_010B:
-            data.UnkMaterialInfo = DataList<Data_010B>.Deserialize( reader, context );
+            data.UnkMaterialInfo = DataList<Data_010B>.Deserialize( reader, context, Data_010B.Deserialize );
             break;
           case SentinelIds.Sentinel_010D:
             data.UnkVertexData = Data_010D.Deserialize( reader, context );

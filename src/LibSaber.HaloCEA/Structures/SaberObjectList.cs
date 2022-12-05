@@ -4,7 +4,7 @@ using LibSaber.Serialization;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public class SaberObjectList : List<SaberObject>, ISerialData<SaberObjectList>
+  public class SaberObjectList : List<SaberObject>
   {
 
     #region Serialization

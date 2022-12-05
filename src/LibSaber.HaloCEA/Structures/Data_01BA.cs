@@ -7,7 +7,7 @@ namespace LibSaber.HaloCEA.Structures
 
   [Sentinel( SentinelIds.Sentinel_01BA )]
   [SaberInternalName( "psENTRY" )]
-  public class Data_01BA : TypeWrapper<string>, ISerialData<Data_01BA>
+  public class Data_01BA : TypeWrapper<string>
   {
 
     public static Data_01BA Deserialize( NativeReader reader, ISerializationContext context )

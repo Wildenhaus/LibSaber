@@ -7,7 +7,7 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public struct InterleavedData : ISerialData<InterleavedData>
+  public struct InterleavedData
   {
 
     #region Data Members

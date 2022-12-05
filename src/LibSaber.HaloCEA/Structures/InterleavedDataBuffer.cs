@@ -8,7 +8,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.ObjectInterleavedBuffer )]
-  public class InterleavedDataBuffer : ISerialData<InterleavedDataBuffer>
+  public class InterleavedDataBuffer
   {
 
     #region Data Members

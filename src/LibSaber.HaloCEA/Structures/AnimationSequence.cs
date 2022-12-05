@@ -8,7 +8,7 @@ namespace LibSaber.HaloCEA.Structures
 
   [Sentinel( SentinelIds.AnimationSequence )]
   [SaberInternalName( "animSEQ" )]
-  public struct AnimationSequence : ISerialData<AnimationSequence>
+  public struct AnimationSequence
   {
 
     #region Data Members
@@ -80,7 +80,7 @@ namespace LibSaber.HaloCEA.Structures
             animSeq.BoundingBox = Box.Deserialize( reader, context );
             break;
           case SentinelIds.AnimationSequence_ActionFrames:
-            animSeq.ActionFrames = DataList<ActionFrame>.Deserialize( reader, context );
+            animSeq.ActionFrames = DataList<ActionFrame>.Deserialize( reader, context, ActionFrame.Deserialize );
             break;
 
           case SentinelIds.Delimiter:

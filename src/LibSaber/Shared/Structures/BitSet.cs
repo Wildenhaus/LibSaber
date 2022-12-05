@@ -38,7 +38,7 @@ namespace LibSaber.Shared.Structures
 
   }
 
-  public class BitSet<TCount> : BitSet, IEnumerable<bool>, ISerialData<BitSet<TCount>>
+  public class BitSet<TCount> : BitSet, IEnumerable<bool>
     where TCount : unmanaged, IConvertible
   {
 

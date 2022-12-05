@@ -6,7 +6,7 @@ namespace LibSaber.HaloCEA.Structures
 {
 
   [Sentinel( SentinelIds.Sentinel_01BA )]
-  public class Data_021E : TypeWrapper<Data_01BA>, ISerialData<Data_021E>
+  public class Data_021E : TypeWrapper<Data_01BA>
   {
 
     #region Serialization

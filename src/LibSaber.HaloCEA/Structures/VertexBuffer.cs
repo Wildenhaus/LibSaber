@@ -8,7 +8,7 @@ using LibSaber.Shared.Structures;
 namespace LibSaber.HaloCEA.Structures
 {
 
-  public class VertexBuffer : List<Vertex>, ISerialData<VertexBuffer>
+  public class VertexBuffer : List<Vertex>
   {
 
     #region Constructor
@@ -83,7 +83,7 @@ namespace LibSaber.HaloCEA.Structures
       for ( var i = 0; i < vertexCount; i++ )
       {
         var position = Vector3<float>.Deserialize( reader, context );
-        var vertex = new Vertex{ Position = position };
+        var vertex = new Vertex { Position = position };
         buffer.Add( vertex );
       }
     }
