@@ -12,6 +12,13 @@ namespace LibSaber.HaloCEA.Structures
   public class VertexBuffer : List<Vertex>
   {
 
+    #region Properties
+
+    public Vector3 Scale { get; private set; }
+    public Vector3 Translation { get; private set; }
+
+    #endregion
+
     #region Constructor
 
     public VertexBuffer()
@@ -51,8 +58,8 @@ namespace LibSaber.HaloCEA.Structures
       var parentObject = context.GetMostRecentObject<SaberObject>();
       var normInVert4 = parentObject.GeometryFlags.HasFlag( ObjectGeometryFlags.NormInVert4 );
 
-      var translationTransform = new Vector3( reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16() );
-      var scaleTransform = new Vector3( reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16() );
+      buffer.Translation = new Vector3( reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16() );
+      buffer.Scale = new Vector3( reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16() );
 
       for ( var i = 0; i < vertexCount; i++ )
       {
@@ -81,6 +88,9 @@ namespace LibSaber.HaloCEA.Structures
 
     private static void ReadUncompressedVertices( VertexBuffer buffer, int vertexCount, NativeReader reader, ISerializationContext context )
     {
+      buffer.Translation = new Vector3( 0 );
+      buffer.Scale = new Vector3( 1 );
+
       for ( var i = 0; i < vertexCount; i++ )
       {
         var position = reader.ReadVector3();
