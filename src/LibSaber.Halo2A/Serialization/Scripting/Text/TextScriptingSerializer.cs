@@ -120,8 +120,16 @@ namespace LibSaber.Halo2A.Serialization.Scripting
       else if ( parts.Length > 2 )
       {
         // Handle quote-delimited property names with spaces
-        propertyValue = parts[ parts.Length - 1 ].Replace( "\"", "" ).Replace( ",", "" ).Trim();
-        propertyName = String.Join( " ", new ArraySegment<string>( parts, 0, parts.Length - 1 ) ).Replace( "\"", "" ).Trim();
+        parts = line.Split( new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
+        var equalsIndex = Array.IndexOf( parts, "=" );
+        var propertyNameParts = new ArraySegment<string>( parts, 0, equalsIndex );
+        var propertyValueParts = new ArraySegment<string>( parts, equalsIndex + 1, parts.Length - equalsIndex - 1 );
+
+        propertyName = String.Join( " ", propertyNameParts );
+        propertyValue = String.Join( " ", propertyValueParts );
+
+        propertyValue = propertyValue.Replace( "\"", "" ).Replace( ",", "" ).Trim();
+        propertyName = propertyName.Replace( "\"", "" ).Trim();
       }
       else
       {
