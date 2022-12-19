@@ -19,6 +19,11 @@ namespace LibSaber.Halo2A.Structures.Geometry
     public float? Weight3 { get; set; }
     public float? Weight4 { get; set; }
 
+    public bool HasSkinningData
+    {
+      get => Index1.HasValue;
+    }
+
   }
 
 }
