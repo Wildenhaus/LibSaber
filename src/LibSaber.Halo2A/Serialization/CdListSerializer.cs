@@ -38,11 +38,15 @@ namespace LibSaber.Halo2A.Serialization
 
     private void ReadHeader( NativeReader reader )
     {
-      const ulong SIGNATURE_1SERh2a2 = 0x3261326852455331;
-      const ulong SIGNATURE_cd_list = 0x7473696C5F64635F;
+      const int SIGNATURE_LENGTH = 0x10;
+      const string SIGNATURE_CD_LIST = "1SERcd_list";
+      const string SIGNATURE_H2A2_CD_LIST = "1SERh2a2_cd_list";
 
-      ASSERT( reader.ReadUInt64() == SIGNATURE_1SERh2a2, "Invalid signature." );
-      ASSERT( reader.ReadUInt64() == SIGNATURE_cd_list, "Invalid signature." );
+      var signature = reader.ReadFixedLengthString( SIGNATURE_LENGTH );
+
+      ASSERT( signature.StartsWith( SIGNATURE_CD_LIST )
+           || signature.StartsWith( SIGNATURE_H2A2_CD_LIST ),
+        "Invalid signature for CdList." );
 
       reader.Position += 0x44;
     }
