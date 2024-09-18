@@ -27,6 +27,7 @@ namespace LibSaber.FileSystem
 
     public IFileSystemNode Parent { get; }
     public IFileSystemNode FirstChild { get; set; }
+    public IFileSystemNode LastChild { get; set; }
     public IFileSystemNode NextSibling { get; set; }
 
     #endregion
@@ -49,10 +50,12 @@ namespace LibSaber.FileSystem
       if ( FirstChild is null )
       {
         FirstChild = node;
+        LastChild = node;
         return;
       }
 
-      FirstChild.AddSibling( node );
+      LastChild.AddSibling( node );
+      LastChild = node;
     }
 
     public void AddSibling( IFileSystemNode node )

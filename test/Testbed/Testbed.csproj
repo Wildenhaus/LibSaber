@@ -1,17 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\LibSaber.HaloCEA\LibSaber.HaloCEA.csproj" />
+    <PackageReference Include="DirectXTexNet" Version="1.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\LibSaber\LibSaber.csproj" />
-    <ProjectReference Include="..\LibSaber.HaloCEA.Tests\LibSaber.HaloCEA.Tests.csproj" />
-    <ProjectReference Include="..\LibSaber.Tests\LibSaber.Tests.csproj" />
+    <ProjectReference Include="..\..\src\LibSaber.HaloCEA\LibSaber.HaloCEA.csproj" />
+    <ProjectReference Include="..\..\src\LibSaber.Halo2A\LibSaber.Halo2A.csproj" />
+    <ProjectReference Include="..\..\src\LibSaber.SpaceMarine2\LibSaber.SpaceMarine2.csproj" />
   </ItemGroup>
 
 </Project>
