@@ -104,6 +104,21 @@ namespace LibSaber.Shared.Structures
       return new BitSet<TCount>( count, data );
     }
 
+    public TEnum As<TEnum>()
+      where TEnum : struct, Enum
+    {
+      ulong value = 0;
+      foreach (TEnum enumValue in Enum.GetValues<TEnum>())
+      {
+        if (this[enumValue])
+        {
+          value |= Convert.ToUInt64(enumValue);
+        }
+      }
+
+      return (TEnum)Enum.ToObject(typeof(TEnum), value);
+    }
+
     private static TCount ReadCount( NativeReader reader )
       => reader.ReadUnmanaged<TCount>();
 

@@ -137,6 +137,16 @@ namespace LibSaber.IO
     public Vector4 ReadVector4()
       => new Vector4( ReadFloat32(), ReadFloat32(), ReadFloat32(), ReadFloat32() );
 
+    public Matrix4x4 ReadMatrix3x3()
+    {
+      return new Matrix4x4(
+        ReadFloat32(), ReadFloat32(), ReadFloat32(), 0,
+        ReadFloat32(), ReadFloat32(), ReadFloat32(), 0,
+        ReadFloat32(), ReadFloat32(), ReadFloat32(), 0,
+        0, 0, 0, 1
+        );
+    }
+
     public Matrix4x4 ReadMatrix4x4()
     {
       return new Matrix4x4(
