@@ -13,8 +13,8 @@ public class fioZIP_CACHE_FILESerializer : SM2SerializerBase<fioZIP_CACHE_FILE>
 
     while (reader.Position < reader.Length)
     {
-      ASSERT(reader.ReadInt32() == 5, "fioZIP_CACHE_FILE::Entry did not start with a 5");
-      ASSERT(reader.ReadByte() == 0x1F, "fioZIP_CACHE_FILE::Entry did not start with a 1F");
+      var version = reader.ReadInt32();
+      var unk_04 = reader.ReadByte();
       var entry = new fioZIP_CACHE_FILE.ENTRY
       {
         FileName = reader.ReadLengthPrefixedString32(),
@@ -23,6 +23,9 @@ public class fioZIP_CACHE_FILESerializer : SM2SerializerBase<fioZIP_CACHE_FILE>
         CompressedSize = reader.ReadInt64(),
         CompressMethod = (fioZIP_CACHE_FILE.COMPRESS_METHOD)reader.ReadInt16(),
       };
+
+      if (version > 5)
+        _ = reader.ReadInt32(); //CRC?
 
       cache.AddEntry(entry);
     }
