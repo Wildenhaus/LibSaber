@@ -42,7 +42,7 @@ namespace LibSaber.Halo2A.Serialization
 
         if ( ( ushort ) sentinel == 1 )
         {
-          ASSERT( reader.BaseStream.Position == endOffset,
+          ASSERT( reader.Position == endOffset,
             "End of Spline reached, but ending offset does not match." );
           break;
         }
@@ -75,7 +75,7 @@ namespace LibSaber.Halo2A.Serialization
             break;
         }
 
-        ASSERT( reader.BaseStream.Position == endOffset,
+        ASSERT( reader.Position == endOffset,
           "Unexpected stream position after Spline Property Read. " +
           "Expected: 0x{0:X}, Actual: 0x{1:X}",
           endOffset,

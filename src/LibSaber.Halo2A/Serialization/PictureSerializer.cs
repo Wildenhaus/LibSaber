@@ -90,7 +90,7 @@ namespace LibSaber.Halo2A.Serialization
 
     private void ReadData( NativeReader reader, Picture pict, long endOffset )
     {
-      var dataSize = endOffset - reader.BaseStream.Position;
+      var dataSize = endOffset - reader.Position;
 
       pict.Data = new byte[ dataSize ];
       reader.Read( pict.Data );

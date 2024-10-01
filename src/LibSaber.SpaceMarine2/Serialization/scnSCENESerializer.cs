@@ -29,6 +29,7 @@ public class scnSCENESerializer : SM2SerializerBase<scnSCENE>
     ReadPsProperty(reader, scene);
     ReadInstMaterialInfoListProperty(reader, scene);
     ReadGeometryMngProperty(reader, scene, context);
+    ReadExternDataProperty(reader, scene);
 
     return scene;
   }
@@ -94,7 +95,7 @@ public class scnSCENESerializer : SM2SerializerBase<scnSCENE>
     var endMarker = reader.ReadUInt16();
     endOffset = reader.ReadUInt32(); // EndOffset, points to next data
     ASSERT(endMarker == 0xFFFF, "Invalid EndMarker for TexList Property.");
-    ASSERT(reader.BaseStream.Position == endOffset, "Invalid EndOffset for TexList Property.");
+    ASSERT(reader.Position == endOffset, "Invalid EndOffset for TexList Property.");
   }
 
   private void ReadPsProperty(NativeReader reader, scnSCENE scene)
@@ -143,6 +144,18 @@ public class scnSCENESerializer : SM2SerializerBase<scnSCENE>
      * Contains most of the model info.
      */
     scene.GeometryGraph = Serializer<objGEOM_MNG>.Deserialize(reader, context);
+  }
+
+  private void ReadExternDataProperty(NativeReader reader, scnSCENE scene)
+  {
+    /* Geometry (Multi-Node Graph?) Data
+     * Contains most of the model info.
+     */
+    if (!scene.PropertyFlags[2])
+      return;
+
+    var count = reader.ReadUInt32();
+
   }
 
 

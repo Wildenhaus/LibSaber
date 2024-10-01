@@ -155,13 +155,13 @@ namespace LibSaber.Halo2A.Serialization
         for ( var i = 0; i < count; i++ )
           reader.ReadMatrix4x4();
 
-        ASSERT( endOffset == reader.BaseStream.Position, "Invalid end position for TPL1 Skin property." );
+        ASSERT( endOffset == reader.Position, "Invalid end position for TPL1 Skin property." );
 
         endFlag = reader.ReadUInt16();
       }
 
       ASSERT( endFlag == 0xFFFF, "Invalid read of TPL1.skin property" );
-      ASSERT( reader.ReadUInt32() == reader.BaseStream.Position, "Invalid end position for TPL1 Skin property." );
+      ASSERT( reader.ReadUInt32() == reader.Position, "Invalid end position for TPL1 Skin property." );
     }
 
     private void ReadTrackAnimProperty( NativeReader reader, Template template, ISerializationContext context )

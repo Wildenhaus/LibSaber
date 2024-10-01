@@ -283,7 +283,7 @@ public class objGEOM_MNGSerializer : SM2SerializerBase<objGEOM_MNG>
     var unk_01 = reader.ReadUInt32(); // objPs count
     var unk_02 = reader.ReadUInt32(); // unk return value, not used?
 
-    ASSERT(reader.BaseStream.Position == endOffset,
+    ASSERT(reader.Position == endOffset,
         "Reader position does not match data header's end offset.");
   }
 
@@ -308,13 +308,13 @@ public class objGEOM_MNGSerializer : SM2SerializerBase<objGEOM_MNG>
     //      break;
     //  }
 
-    //  ASSERT(reader.BaseStream.Position == innerEndOffset,
+    //  ASSERT(reader.Position == innerEndOffset,
     //    "Reader position does not match data's end offset.");
     //}
 
     reader.Position = endOffset;
 
-    ASSERT(reader.BaseStream.Position == endOffset,
+    ASSERT(reader.Position == endOffset,
         "Reader position does not match data's end offset.");
   }
 
@@ -349,7 +349,7 @@ public class objGEOM_MNGSerializer : SM2SerializerBase<objGEOM_MNG>
   private void ReadEndOfData(NativeReader reader, objGEOM_MNG graph)
   {
     var endOffset = reader.ReadUInt32();
-    ASSERT(reader.BaseStream.Position == endOffset,
+    ASSERT(reader.Position == endOffset,
         "Reader position does not match data's end offset.");
   }
 

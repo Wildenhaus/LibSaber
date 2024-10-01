@@ -91,7 +91,7 @@ namespace LibSaber.Halo2A.Serialization
       // Not yet sure how to tell if this property is present.
       if ( unk_01 != 0x1 )
       {
-        reader.BaseStream.Position -= 5;
+        reader.Position -= 5;
         return;
       }
 
@@ -175,7 +175,7 @@ namespace LibSaber.Halo2A.Serialization
       var unk_01 = reader.ReadUInt32(); // TODO
       var unk_02 = reader.ReadUInt32(); // TODO
 
-      ASSERT( reader.BaseStream.Position == endOffset,
+      ASSERT( reader.Position == endOffset,
           "Reader position does not match data header's end offset." );
     }
 
@@ -200,7 +200,7 @@ namespace LibSaber.Halo2A.Serialization
     private void ReadEndOfData( NativeReader reader, GeometryGraph graph )
     {
       var endOffset = reader.ReadUInt32();
-      ASSERT( reader.BaseStream.Position == endOffset,
+      ASSERT( reader.Position == endOffset,
           "Reader position does not match data's end offset." );
     }
 
