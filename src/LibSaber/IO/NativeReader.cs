@@ -62,52 +62,12 @@ namespace LibSaber.IO
 
     public Guid ReadGuid() => ReadUnmanaged<Guid>();
 
-    public string ReadFixedLengthString( int length )
+    public string ReadFixedLengthString(int length)
     {
-      var pos = 0;
-      var sb = new StringBuilder( length );
+      byte[] buffer = new byte[length];
+      BaseStream.Read(buffer, 0, length);
 
-      while ( length - pos >= 8 )
-      {
-        var data = ReadUnmanaged<Int64>();
-        sb.Append( ( char ) ( ( data >> 0x00 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x08 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x10 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x18 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x20 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x28 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x30 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x38 ) & 0xFF ) );
-        pos += 8;
-      }
-
-      if ( length - pos >= 4 )
-      {
-        var data = ReadUnmanaged<Int32>();
-        sb.Append( ( char ) ( ( data >> 0x00 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x08 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x10 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x18 ) & 0xFF ) );
-        pos += 4;
-      }
-
-      if ( length - pos >= 2 )
-      {
-        var data = ReadUnmanaged<Int16>();
-        sb.Append( ( char ) ( ( data >> 0x00 ) & 0xFF ) );
-        sb.Append( ( char ) ( ( data >> 0x08 ) & 0xFF ) );
-        pos += 2;
-      }
-
-      if ( length - pos == 1 )
-      {
-        var data = ReadUnmanaged<Byte>();
-        sb.Append( ( char ) data );
-        pos += 1;
-      }
-
-      ASSERT( pos == length, "Incorrectly read fixed-length string." );
-      return sb.ToString();
+      return Encoding.ASCII.GetString(buffer);
     }
 
     public string ReadNullTerminatedString()
