@@ -11,21 +11,40 @@ public class fioZIP_CACHE_FILESerializer : SM2SerializerBase<fioZIP_CACHE_FILE>
   {
     var cache = new fioZIP_CACHE_FILE();
 
+    Span<byte> versionBuffer = stackalloc byte[5];
+    Span<byte> entryBuffer = stackalloc byte[26];
+
     while (reader.Position < reader.Length)
     {
-      var version = reader.ReadInt32();
-      var unk_04 = reader.ReadByte();
+      // 1st Read: Version and Unk (5 bytes)
+      reader.Read(versionBuffer);
+      var version = BitConverter.ToInt32(versionBuffer.Slice(0,4));
+      var unk_04 = versionBuffer[4];
+
+      // 2nd Read: FileName (Variable bytes)
+      var fileName = reader.ReadLengthPrefixedString32();
+
+      // 3rd Read: Entry Info (26 bytes)
+      reader.Read(entryBuffer);
+      var offset = BitConverter.ToInt64(entryBuffer.Slice(0,8));
+      var size = BitConverter.ToInt64(entryBuffer.Slice(8,8));
+      var compressedSize = BitConverter.ToInt64(entryBuffer.Slice(16,8));
+      var compressMethod = (fioZIP_CACHE_FILE.COMPRESS_METHOD)BitConverter.ToInt16(entryBuffer.Slice(24,2));
+
       var entry = new fioZIP_CACHE_FILE.ENTRY
       {
-        FileName = reader.ReadLengthPrefixedString32(),
-        Offset = reader.ReadInt64(),
-        Size = reader.ReadInt64(),
-        CompressedSize = reader.ReadInt64(),
-        CompressMethod = (fioZIP_CACHE_FILE.COMPRESS_METHOD)reader.ReadInt16(),
+        FileName = fileName,
+        Offset = offset,
+        Size = size,
+        CompressedSize = compressedSize,
+        CompressMethod = compressMethod
       };
 
+      // 4th Read: Version 6+ data
       if (version > 5)
-        _ = reader.ReadInt32(); //CRC?
+      {
+        _ = reader.ReadInt32(); // CRC?
+      }
 
       cache.AddEntry(entry);
     }
