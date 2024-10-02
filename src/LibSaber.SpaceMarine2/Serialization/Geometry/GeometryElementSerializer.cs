@@ -27,6 +27,7 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
     #region Private Methods
 
     public abstract T Deserialize( NativeReader reader );
+    public abstract T Deserialize( SpanReader reader, GeometryBufferFlags flags );
 
     public abstract IEnumerable<T> DeserializeRange( NativeReader reader, int startIndex, int endIndex );
 

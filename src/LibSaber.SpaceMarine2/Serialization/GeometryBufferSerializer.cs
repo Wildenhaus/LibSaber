@@ -74,7 +74,8 @@ public sealed class GeometryBufferSerializer : SM2SerializerBase<List<GeometryBu
        * It appears that it's always stored as a 64-bit int.
        */
 
-      buffer.Flags = BitSet<short>.Deserialize(reader, null).As<GeometryBufferFlags>();
+      var bitSet = BitSet<short>.Deserialize(reader, null);
+      buffer.Flags = bitSet.As<GeometryBufferFlags>();
     }
   }
 

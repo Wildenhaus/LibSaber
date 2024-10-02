@@ -6,19 +6,19 @@ public enum GeometryBufferFlags : ulong
     #pragma warning disable format
     // @formatter:off — disable formatter after this line
 
-    _FACE = 0, //verified
+    _FACE = 0,
 
     _VERT             = 1ul << 0x00,
     _VERT_2D          = 1ul << 0x01,
     _VERT_4D          = 1ul << 0x02,
-    _COMPRESSED_VERT  = 1ul << 0x03,
-    _WEIGHT1          = 1ul << 0x04,
-    _WEIGHT2          = 1ul << 0x05,
-    _WEIGHT3          = 1ul << 0x06, //
-    _WEIGHT4WithBoneIds          = 1ul << 0x07,
-    _INDEX            = 1ul << 0x08, //
-    _WEIGHT8WithBones             = 1ul << 0x09, //verified
-    _COMPRESSED_NORM  = 1ul << 0x0A,
+    _VERT_COMPR       = 1ul << 0x03,
+    _Unk_05           = 1ul << 0x04,
+    _Unk_06           = 1ul << 0x05,
+    Unk_07           = 1ul << 0x06,
+    _WEIGHT4          = 1ul << 0x07,
+    Unk_09          = 1ul << 0x08,
+    _INDICES4            = 1ul << 0x09,
+    _NORM             = 1ul << 0x0A,
     _NORM_IN_VERT4    = 1ul << 0x0B,
 
     _TANG0            = 1ul << 0x0C,
@@ -32,9 +32,9 @@ public enum GeometryBufferFlags : ulong
     Unk_14            = 1ul << 0x13,
     Unk_15            = 1ul << 0x14,
     Unk_16            = 1ul << 0x15,
-    _COLOR0            = 1ul << 0x16,
-    _COLOR1            = 1ul << 0x17,
-    _COLOR2            = 1ul << 0x18,
+    _COLOR0           = 1ul << 0x16,
+    _COLOR1           = 1ul << 0x17,
+    _COLOR2           = 1ul << 0x18,
 
     _TEX0             = 1ul << 0x19,
     _TEX1             = 1ul << 0x1A,
@@ -75,5 +75,7 @@ public enum GeometryBufferFlags : ulong
     Unk_3D = 1ul << 0x3C,
     Unk_3E = 1ul << 0x3D,
     Unk_3F = 1ul << 0x3E,
+    Unk_40 = 1ul << 0x3F,
+
     #pragma warning restore format
   }

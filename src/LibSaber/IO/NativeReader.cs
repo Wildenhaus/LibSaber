@@ -153,6 +153,14 @@ namespace LibSaber.IO
       return new BitArray(buffer);
     }
 
+    public unsafe SpanReader GetSpanReader(int size)
+    {
+      var span = new byte[size];
+
+      Read(span);
+      return new SpanReader(span);
+    }
+
     public byte PeekByte()
     {
       var b = ReadByte();

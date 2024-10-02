@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using LibSaber.Shared.Structures;
+using LibSaber.SpaceMarine2.Enumerations;
 
 namespace LibSaber.SpaceMarine2.Structures;
 
@@ -20,7 +21,7 @@ public class objOBJ
 
   public short id { get; set; }
   public string ReadName { get; set; }
-  public BitSet<int> state { get; set; }
+  public ObjectStateFlags state { get; set; }
 
   public short parentId { get; set; }
   public short nextId { get; set; }
@@ -95,13 +96,13 @@ public class objOBJ
       return _name;
 
     if (!string.IsNullOrWhiteSpace(UnkName))
-      return _name = UnkName.Split(new[] { "|" }, System.StringSplitOptions.RemoveEmptyEntries).Last();
+      return _name = UnkName.Split(new[] { "|" }, System.StringSplitOptions.RemoveEmptyEntries).Last() + $"_{id:X4}";
 
     if (!string.IsNullOrWhiteSpace(ReadOnlyObjectName))
-      return _name = ReadOnlyObjectName;
+      return _name = ReadOnlyObjectName + $"_{id:X4}";
 
     if (!string.IsNullOrWhiteSpace(ReadName))
-      return _name = ReadName;
+      return _name = ReadName + $"_{id:X4}";
 
     return _name = $"Object{id:X4}";
   }

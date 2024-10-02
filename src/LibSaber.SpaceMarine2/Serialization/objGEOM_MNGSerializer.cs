@@ -103,19 +103,8 @@ public class objGEOM_MNGSerializer : SM2SerializerBase<objGEOM_MNG>
     graph.objects = Serializer<List<objOBJ>>.Deserialize(reader, context);
   }
 
-  //private void ReadObjectPropsProperty(NativeReader reader, objGEOM_MNG graph, ISerializationContext context)
-  //{
-  //  var count = reader.ReadInt16();
-
-  //  for (var i = 0; i < count; i++)
-  //  {
-  //    graph.objects[i].objProps = reader.ReadByte();
-  //  }
-  //}
-
   private void ReadObjectPropsProperty(NativeReader reader, objGEOM_MNG graph, ISerializationContext context)
   {
-    // This section only seems to be present in ss_prop__h.tpl
     var count = reader.ReadInt32();
 
     if (reader.ReadByte() == 0)

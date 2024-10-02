@@ -1,5 +1,7 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Structures;
+using LibSaber.SpaceMarine2.Enumerations;
 using LibSaber.SpaceMarine2.Structures;
 
 namespace LibSaber.SpaceMarine2.Serialization;
@@ -93,8 +95,8 @@ public class objOBJSerializer : SM2SerializerBase<List<objOBJ>>
 
     for (var i = 0; i < objects.Count; i++)
     {
-      _ = reader.ReadUInt32(); // TODO: Unk
-      _ = reader.ReadUInt32(); // TODO: Unk
+      var bitSet = BitSet<short>.Deserialize(reader, null);
+      objects[i].state = bitSet.As<ObjectStateFlags>();
     }
   }
 
@@ -187,40 +189,6 @@ public class objOBJSerializer : SM2SerializerBase<List<objOBJ>>
     var unshared = Serializer<List<objGEOM_UNSHARED>>.Deserialize(reader, context);
     for (var i = 0; i < objects.Count; i++)
       objects[i].geomData = unshared[i];
-
-    //var objFlags = reader.ReadBitArray(objects.Count);
-
-    //for (var i = 0; i < objects.Count; i++)
-    //{
-    //  if (objFlags[i])
-    //  {
-    //    var unk_01 = reader.ReadUInt32(); // TODO: 0x00000003
-    //    var unk_02 = reader.ReadByte(); // TODO: 0x7
-    //    ASSERT(unk_01 == 0x4, "4 val not found");
-    //    //ASSERT(unk_02 == 0xC, "C val not found");
-
-    //    var geomData = new objGEOM_UNSHARED();
-    //    geomData.splitIndex = reader.ReadUInt32();
-    //    geomData.numSplits = reader.ReadUInt32();
-    //    geomData.bbox = new m3dBOX(reader.ReadVector3(), reader.ReadVector3());
-    //    geomData.obb = new m3dBOX(reader.ReadVector3(), reader.ReadVector3());
-    //    reader.ReadVector3();
-    //    reader.ReadVector3();
-    //    reader.ReadByte();
-    //    reader.ReadByte();
-    //    reader.ReadByte();
-    //    reader.ReadByte();
-
-    //    objects[i].geomData = geomData;
-    //  }
-    //}
-
-    //ASSERT(reader.PeekByte() != 0x3, "Still more objGEOM_UNSHARED data");
-    //    //reader.ReadByte();
-    //    //reader.ReadByte();
-    //    //reader.ReadByte();
-    //    //reader.ReadByte();
-    //    //reader.ReadByte();
   }
 
   private void ReadUnkNamesProperty(NativeReader reader, List<objOBJ> objects)

@@ -1,9 +1,9 @@
 ﻿using System.Numerics;
 using LibSaber.Extensions;
+using LibSaber.IO;
 using LibSaber.SpaceMarine2.Enumerations;
 using LibSaber.SpaceMarine2.Structures;
 using LibSaber.SpaceMarine2.Structures.Geometry;
-using LibSaber.IO;
 
 namespace LibSaber.SpaceMarine2.Serialization.Geometry
 {
@@ -39,15 +39,54 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
       return data;
     }
 
-    public override IEnumerable<InterleavedData> DeserializeRange( NativeReader reader, int startIndex, int endIndex )
+    public override InterleavedData Deserialize( SpanReader reader, GeometryBufferFlags flags )
     {
-      var startOffset = Buffer.StartOffset + ( startIndex * Buffer.ElementSize );
+      var data = new InterleavedData();
+
+      if (flags.HasFlag(GeometryBufferFlags._TANG0))
+        data.Tangent0 = ReadTangent(reader);
+      if (flags.HasFlag(GeometryBufferFlags._TANG1))
+        data.Tangent1 = ReadTangent(reader);
+      if (flags.HasFlag(GeometryBufferFlags._TANG2))
+        data.Tangent2 = ReadTangent(reader);
+      if (flags.HasFlag(GeometryBufferFlags._TANG3))
+        data.Tangent3 = ReadTangent(reader);
+      if (flags.HasFlag(GeometryBufferFlags._TANG4))
+        data.Tangent4 = ReadTangent(reader);
+
+      if (flags.HasFlag(GeometryBufferFlags._COLOR0))
+        data.Color0 = ReadVertexColor(reader);
+      if (flags.HasFlag(GeometryBufferFlags._COLOR1))
+        data.Color1 = ReadVertexColor(reader);
+      if (flags.HasFlag(GeometryBufferFlags._COLOR2))
+        data.Color2 = ReadVertexColor(reader);
+
+      if (flags.HasFlag(GeometryBufferFlags._TEX0))
+        data.UV0 = ReadUV(reader, flags.HasFlag(GeometryBufferFlags._COMPRESSED_TEX_0));
+      if (flags.HasFlag(GeometryBufferFlags._TEX1))
+        data.UV1 = ReadUV(reader, flags.HasFlag(GeometryBufferFlags._COMPRESSED_TEX_1));
+      if (flags.HasFlag(GeometryBufferFlags._TEX2))
+        data.UV2 = ReadUV(reader, flags.HasFlag(GeometryBufferFlags._COMPRESSED_TEX_2));
+      if (flags.HasFlag(GeometryBufferFlags._TEX3))
+        data.UV3 = ReadUV(reader, flags.HasFlag(GeometryBufferFlags._COMPRESSED_TEX_3));
+      if (flags.HasFlag(GeometryBufferFlags._TEX4))
+        data.UV4 = ReadUV(reader, flags.HasFlag(GeometryBufferFlags._COMPRESSED_TEX_4));
+
+      return data;
+    }
+
+    public override IEnumerable<InterleavedData> DeserializeRange(NativeReader reader, int startIndex, int endIndex)
+    {
+      var startOffset = Buffer.StartOffset + (startIndex * Buffer.ElementSize);
       var length = endIndex - startIndex;
 
       reader.Position = startOffset;
 
-      for ( var i = 0; i < length; i++ )
-        yield return Deserialize( reader );
+      for (var i = 0; i < length; i++)
+      {
+        var spanReader = reader.GetSpanReader(Buffer.ElementSize);
+        yield return Deserialize(spanReader, Buffer.Flags);
+      }
     }
 
     #endregion
@@ -83,6 +122,21 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
       return new Vector4( x, y, z, w );
     }
 
+    private static Vector4 ReadTangent(SpanReader reader)
+    {
+      var x = reader.ReadSByte().SNormToFloat();
+      var y = reader.ReadSByte().SNormToFloat();
+      var z = reader.ReadSByte().SNormToFloat();
+      var w = reader.ReadSByte().SNormToFloat();
+
+      //ASSERT(x >= -1.01 && x <= 1.01, "Tangent X coord out of bounds.");
+      //ASSERT(y >= -1.01 && y <= 1.01, "Tangent Y coord out of bounds.");
+      //ASSERT(z >= -1.01 && z <= 1.01, "Tangent Z coord out of bounds.");
+      //ASSERT(w >= -1.01 && w <= 1.01, "Tangent W coord out of bounds.");
+
+      return new Vector4(x, y, z, w);
+    }
+
     private void ReadVertexColors( NativeReader reader, ref InterleavedData data )
     {
       if ( Flags.HasFlag( GeometryBufferFlags._COLOR0 ) )
@@ -101,6 +155,16 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
       var a = reader.ReadByte() / 255.0f;
 
       return new Vector4( r, g, b, a );
+    }
+
+    private static Vector4 ReadVertexColor(SpanReader reader)
+    {
+      var r = reader.ReadByte() / 255.0f;
+      var g = reader.ReadByte() / 255.0f;
+      var b = reader.ReadByte() / 255.0f;
+      var a = reader.ReadByte() / 255.0f;
+
+      return new Vector4(r, g, b, a);
     }
 
     private void ReadUVs( NativeReader reader, ref InterleavedData data )
@@ -134,6 +198,26 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
         var v = 1 - reader.ReadFloat32();
 
         return new Vector4( u, v, 0, 0 );
+      }
+    }
+
+    private static Vector4 ReadUV(SpanReader reader, bool isCompressed)
+    {
+      if (isCompressed)
+      {
+        // Fairly sure this is correct
+        var u = reader.ReadInt16().SNormToFloat();
+        var v = 1 - reader.ReadInt16().SNormToFloat();
+
+        return new Vector4(u, v, 0, 0);
+      }
+      else
+      {
+        // Fairly sure this is correct
+        var u = reader.ReadFloat32();
+        var v = 1 - reader.ReadFloat32();
+
+        return new Vector4(u, v, 0, 0);
       }
     }
 

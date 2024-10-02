@@ -1,19 +1,12 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Reflection.PortableExecutable;
-using System.Runtime.InteropServices;
-using DirectXTexNet;
+﻿using Assimp;
+using Assimp.Unmanaged;
 using LibSaber.FileSystem;
-using LibSaber.HaloCEA.Structures;
 using LibSaber.IO;
 using LibSaber.SpaceMarine2.Enumerations;
 using LibSaber.SpaceMarine2.Files;
 using LibSaber.SpaceMarine2.Serialization;
-using LibSaber.SpaceMarine2.Serialization.Scripting;
+using LibSaber.SpaceMarine2.Serialization.Geometry;
 using LibSaber.SpaceMarine2.Structures;
-using LibSaber.SpaceMarine2.Structures.Resources;
-using LibSaber.SpaceMarine2.Structures.Textures;
 using Testbed;
 
 
@@ -24,71 +17,15 @@ internal class Program
 
   private static void Main(string[] args)
   {
+    //AssimpLibrary.Instance.LoadLibrary(@"E:\Code\assimp\bin\Debug\assimp-vc143-mtd.dll");
+
     InitFileSystem();
-    TestAllTextureFormats();
+    //TestAllTextureFormats();
     //TestDeserializeAllTpls();
 
-    //const string lgName = "hub_battle_barge.lg";
-    //const string lgName = "pve_firestorm.lg";
-    //var node = _fileSystem.EnumerateFiles().FirstOrDefault(x => Path.GetFileName(x.Name) == lgName);
-    //var reader = new NativeReader(node.Open(), Endianness.LittleEndian);
-    //var lg = Serializer<scnSCENE>.Deserialize(reader);
-
-    //void CrcHash(string str)
-    //  => Console.WriteLine("{0:X8} = {1}", Crc32.CalculateCrc32(str), str);
-
-    //CrcHash("sdc_version");
-    //CrcHash("binarydictionarysize");
-    //CrcHash("macro");
-    //CrcHash("filenamespreload");
-    //CrcHash("levelids");
-    //CrcHash("psos");
-    //CrcHash("shader_code");
-
-    //var hashes = new List<uint>()
-    //{
-    //  0x492a290f,
-    //  0xb8ca1e98,
-    //  0xae8fc643,
-    //  0x529909c8,
-    //  0x97eb2089,
-    //  0x6044248d,
-    //  0xeb2b14e1
-    //};
-    //var strings = File.ReadAllLines(@"C:\Users\rwild\Desktop\strings.txt");
-    //foreach(var line in strings)
-    //{
-    //  var crc = Crc32.CalculateCrc32(line);
-    //  if (hashes.Contains(crc))
-    //    Console.WriteLine("{0:X8} = {1}",crc, line);
-    //}
-
-    //cdLIST cdl;
-    //ClassList classlist;
-
-    //{
-    //  var node = _fileSystem.EnumerateFiles().FirstOrDefault(x => Path.GetFileName(x.Name) == "pve_firestorm.cd_list");
-    //  var reader = new NativeReader(node.Open(), Endianness.LittleEndian);
-    //  cdl = Serializer<cdLIST>.Deserialize(reader);
-    //}
-    //{
-    //  var node = _fileSystem.EnumerateFiles().FirstOrDefault(x => Path.GetFileName(x.Name) == "pve_firestorm.class_list");
-    //  var reader = new NativeReader(node.Open(), Endianness.LittleEndian);
-    //  classlist = Serializer<ClassList>.Deserialize(reader);
-    //}
-
-    //foreach (var entry in cdl)
-    //{
-    //  if (entry.__type is null)
-    //    continue;
-
-    //  if (classlist.TplLookup.TryGetValue(entry.__type, out var tplName))
-    //    continue;
-
-    //  Console.WriteLine(entry.Name);
-      //Console.WriteLine("\t{0}", tplName);
-    //}
-
+    var exporter = new SM2ModelExporter(_fileSystem);
+    exporter.ExportModel("cc_calgar.tpl", @"E:\test\");
+    exporter.ExportModel("scripted_turret.tpl", @"E:\test\");
   }
 
   static void InitFileSystem()
@@ -144,6 +81,8 @@ internal class Program
     var tpls = _fileSystem.EnumerateFiles().Where(x => Path.GetExtension(x.Name) == ".tpl");
     foreach (var tplNode in tpls)
     {
+      if (!tplNode.Name.Contains("scripted_turret.tpl")) continue;
+
       try
       {
         var fname = Path.GetFileName(tplNode.Name);
@@ -158,6 +97,7 @@ internal class Program
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("FAILED.");
         Console.ForegroundColor = ConsoleColor.White;
+        throw;
       }
     }
   }
@@ -167,6 +107,56 @@ internal class Program
     using var stream = tplNode.Open();
     var reader = new NativeReader(stream, Endianness.LittleEndian);
     var tpl = Serializer<animTPL>.Deserialize(reader);
+
+    TestDeserializeTplData(tplNode, tpl);
+  }
+
+  static void TestDeserializeTplData(IFileSystemNode tplNode, animTPL tpl)
+  {
+    var tplDataName = Path.ChangeExtension(tplNode.Name, ".tpl_data");
+    var tplDataNode = _fileSystem.EnumerateFiles().SingleOrDefault(x => x.Name == tplDataName);
+
+    Stream dataStream = null;
+    if (tplDataNode is null)
+      dataStream = tplNode.Open();
+    else
+      dataStream = tplDataNode.Open();
+
+    var reader = new NativeReader(dataStream, Endianness.LittleEndian);
+    TestDeserializeTplBuffers(tpl, reader);
+  }
+
+  static void TestDeserializeTplBuffers(animTPL tpl, NativeReader reader)
+  {
+    foreach(var buffer in tpl.GeometryGraph.Buffers)
+    {
+      switch(buffer.ElementType)
+      {
+        case GeometryElementType.Face:
+          {
+            var serializer = new FaceSerializer(buffer);
+            foreach (var e in serializer.DeserializeRange(reader, 0, buffer.Count)) { }
+            break;
+          }
+        case GeometryElementType.Vertex:
+          {
+            var serializer = new VertexSerializer(buffer);
+            foreach (var e in serializer.DeserializeRange(reader, 0, buffer.Count)) { }
+            break;
+          }
+        case GeometryElementType.Interleaved:
+          {
+            var serializer = new InterleavedDataSerializer(buffer);
+            foreach (var e in serializer.DeserializeRange(reader, 0, buffer.Count)) { }
+            break;
+          }
+        default:
+          {
+            continue;
+            //throw new NotImplementedException("Unknown buffer type.");
+          }
+      }
+    }
   }
 
   #endregion

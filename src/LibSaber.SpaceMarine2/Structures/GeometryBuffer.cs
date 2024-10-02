@@ -49,7 +49,7 @@ public class GeometryBuffer
     if (Flags == GeometryBufferFlags._FACE)
       return GeometryElementType.Face;
 
-    if (Flags.HasFlag(GeometryBufferFlags._WEIGHT8WithBones))
+    if (Flags.HasFlag(GeometryBufferFlags._WEIGHT4))
       return GeometryElementType.BoneId;
 
     return GeometryElementType.Unknown;
