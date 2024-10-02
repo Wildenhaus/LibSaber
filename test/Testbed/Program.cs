@@ -25,70 +25,8 @@ internal class Program
   private static void Main(string[] args)
   {
     InitFileSystem();
-    TestAllTextureFormats();
+    //TestAllTextureFormats();
     //TestDeserializeAllTpls();
-
-    //const string lgName = "hub_battle_barge.lg";
-    //const string lgName = "pve_firestorm.lg";
-    //var node = _fileSystem.EnumerateFiles().FirstOrDefault(x => Path.GetFileName(x.Name) == lgName);
-    //var reader = new NativeReader(node.Open(), Endianness.LittleEndian);
-    //var lg = Serializer<scnSCENE>.Deserialize(reader);
-
-    //void CrcHash(string str)
-    //  => Console.WriteLine("{0:X8} = {1}", Crc32.CalculateCrc32(str), str);
-
-    //CrcHash("sdc_version");
-    //CrcHash("binarydictionarysize");
-    //CrcHash("macro");
-    //CrcHash("filenamespreload");
-    //CrcHash("levelids");
-    //CrcHash("psos");
-    //CrcHash("shader_code");
-
-    //var hashes = new List<uint>()
-    //{
-    //  0x492a290f,
-    //  0xb8ca1e98,
-    //  0xae8fc643,
-    //  0x529909c8,
-    //  0x97eb2089,
-    //  0x6044248d,
-    //  0xeb2b14e1
-    //};
-    //var strings = File.ReadAllLines(@"C:\Users\rwild\Desktop\strings.txt");
-    //foreach(var line in strings)
-    //{
-    //  var crc = Crc32.CalculateCrc32(line);
-    //  if (hashes.Contains(crc))
-    //    Console.WriteLine("{0:X8} = {1}",crc, line);
-    //}
-
-    //cdLIST cdl;
-    //ClassList classlist;
-
-    //{
-    //  var node = _fileSystem.EnumerateFiles().FirstOrDefault(x => Path.GetFileName(x.Name) == "pve_firestorm.cd_list");
-    //  var reader = new NativeReader(node.Open(), Endianness.LittleEndian);
-    //  cdl = Serializer<cdLIST>.Deserialize(reader);
-    //}
-    //{
-    //  var node = _fileSystem.EnumerateFiles().FirstOrDefault(x => Path.GetFileName(x.Name) == "pve_firestorm.class_list");
-    //  var reader = new NativeReader(node.Open(), Endianness.LittleEndian);
-    //  classlist = Serializer<ClassList>.Deserialize(reader);
-    //}
-
-    //foreach (var entry in cdl)
-    //{
-    //  if (entry.__type is null)
-    //    continue;
-
-    //  if (classlist.TplLookup.TryGetValue(entry.__type, out var tplName))
-    //    continue;
-
-    //  Console.WriteLine(entry.Name);
-      //Console.WriteLine("\t{0}", tplName);
-    //}
-
   }
 
   static void InitFileSystem()
