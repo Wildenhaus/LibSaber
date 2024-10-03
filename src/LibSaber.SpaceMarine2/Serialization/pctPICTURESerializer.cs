@@ -93,7 +93,7 @@ namespace LibSaber.SpaceMarine2.Serialization
 
     private void ReadData(NativeReader reader, pctPICTURE pict, long endOffset)
     {
-      var dataSize = endOffset - reader.BaseStream.Position;
+      var dataSize = endOffset - reader.Position;
 
       pict.Data = new byte[dataSize];
       reader.Read(pict.Data);

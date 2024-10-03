@@ -21,7 +21,7 @@ public class tplSKINSerializer : SM2SerializerBase<tplSKIN>
       var endOffset = reader.ReadUInt32();
       if (sentinel == 0xFFFF) // End of chunk
       {
-        ASSERT(endOffset == reader.BaseStream.Position, "Invalid end position for TPL1 Skin property.");
+        ASSERT(endOffset == reader.Position, "Invalid end position for TPL1 Skin property.");
         break;
       }
 
@@ -40,7 +40,7 @@ public class tplSKINSerializer : SM2SerializerBase<tplSKIN>
           lodBonesCount[i] = reader.ReadUInt16();
       }
 
-      ASSERT(endOffset == reader.BaseStream.Position, "Invalid end position for TPL1 Skin property.");
+      ASSERT(endOffset == reader.Position, "Invalid end position for TPL1 Skin property.");
     }
 
     return skin;

@@ -55,7 +55,7 @@ public sealed class GeometryBufferSerializer : SM2SerializerBase<List<GeometryBu
       }
     }
 
-    ASSERT(reader.BaseStream.Position == sectionEndOffset,
+    ASSERT(reader.Position == sectionEndOffset,
         "Reader position does not match the buffer section's end offset.");
 
     return buffers;
@@ -118,10 +118,10 @@ public sealed class GeometryBufferSerializer : SM2SerializerBase<List<GeometryBu
 
     foreach (var buffer in geometryBuffers)
     {
-      buffer.StartOffset = reader.BaseStream.Position;
+      buffer.StartOffset = reader.Position;
       buffer.EndOffset = buffer.StartOffset + buffer.BufferLength;
 
-      reader.BaseStream.Position = buffer.EndOffset;
+      reader.Position = buffer.EndOffset;
     }
   }
 

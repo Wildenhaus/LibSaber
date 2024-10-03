@@ -41,7 +41,7 @@ public class m3dSPLSerializer : SM2SerializerBase<m3dSPL>
 
       if ((ushort)sentinel == 1)
       {
-        ASSERT(reader.BaseStream.Position == endOffset,
+        ASSERT(reader.Position == endOffset,
           "End of Spline reached, but ending offset does not match.");
         break;
       }
@@ -74,7 +74,7 @@ public class m3dSPLSerializer : SM2SerializerBase<m3dSPL>
           break;
       }
 
-      ASSERT(reader.BaseStream.Position == endOffset,
+      ASSERT(reader.Position == endOffset,
         "Unexpected stream position after Spline Property Read. " +
         "Expected: 0x{0:X}, Actual: 0x{1:X}",
         endOffset,

@@ -94,7 +94,7 @@ public class scnSCENESerializer : SM2SerializerBase<scnSCENE>
     var endMarker = reader.ReadUInt16();
     endOffset = reader.ReadUInt32(); // EndOffset, points to next data
     ASSERT(endMarker == 0xFFFF, "Invalid EndMarker for TexList Property.");
-    ASSERT(reader.BaseStream.Position == endOffset, "Invalid EndOffset for TexList Property.");
+    ASSERT(reader.Position == endOffset, "Invalid EndOffset for TexList Property.");
   }
 
   private void ReadPsProperty(NativeReader reader, scnSCENE scene)
