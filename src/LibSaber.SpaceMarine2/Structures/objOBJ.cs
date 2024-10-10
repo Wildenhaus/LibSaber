@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using LibSaber.Shared.Structures;
+using LibSaber.SpaceMarine2.Enumerations;
 
 namespace LibSaber.SpaceMarine2.Structures;
 
@@ -20,7 +21,7 @@ public class objOBJ
 
   public short id { get; set; }
   public string ReadName { get; set; }
-  public BitSet<int> state { get; set; }
+  public ObjectStateFlags state { get; set; }
 
   public short parentId { get; set; }
   public short nextId { get; set; }

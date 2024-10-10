@@ -1,5 +1,7 @@
 ﻿using LibSaber.IO;
 using LibSaber.Serialization;
+using LibSaber.Shared.Structures;
+using LibSaber.SpaceMarine2.Enumerations;
 using LibSaber.SpaceMarine2.Structures;
 
 namespace LibSaber.SpaceMarine2.Serialization;
@@ -93,8 +95,8 @@ public class objOBJSerializer : SM2SerializerBase<List<objOBJ>>
 
     for (var i = 0; i < objects.Count; i++)
     {
-      _ = reader.ReadUInt32(); // TODO: Unk
-      _ = reader.ReadUInt32(); // TODO: Unk
+      var bitSet = BitSet<short>.Deserialize(reader, null);
+      objects[i].state = bitSet.As<ObjectStateFlags>();
     }
   }
 

@@ -10,6 +10,7 @@ public class GeometryBuffer
 
   public ushort FlagSize { get; set; }
   public GeometryBufferFlags Flags { get; set; }
+  public FVFFlags FlagSet { get; set; }
   public ushort ElementSize { get; set; }
   public uint BufferLength { get; set; }
   public long StartOffset { get; set; }

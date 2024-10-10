@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace LibSaber.Common
 {
@@ -9,6 +10,7 @@ namespace LibSaber.Common
     /// <summary>
     ///   Returns the fractional part of each float in the vector.
     /// </summary>
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     public static Vector2 Frac( in Vector2 value )
     {
       return new Vector2(
@@ -20,6 +22,7 @@ namespace LibSaber.Common
     /// <summary>
     ///   Returns the fractional part of each float in the vector.
     /// </summary>
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     public static Vector3 Frac( in Vector3 value )
     {
       return new Vector3(
@@ -32,12 +35,14 @@ namespace LibSaber.Common
     /// <summary>
     ///   Returns the value, normalized to a range of [0,1].
     /// </summary>
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     public static float Saturate( in float value )
       => Math.Min( 1.0f, Math.Max( 0.0f, value ) );
 
     /// <summary>
     ///   Returns the sign of the input value.
     /// </summary>
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     public static short Sign( in short value )
       => ( short ) ( value < 0 ? -1 : 1 );
 
@@ -50,6 +55,7 @@ namespace LibSaber.Common
     /// <returns>
     ///   The unpacked vector.
     /// </returns>
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     public static Vector3 UnpackVector3FromInt16( short w )
     {
       /* Shader code works as follows:
@@ -67,15 +73,6 @@ namespace LibSaber.Common
       var x = ( float ) xz.X;
       var y = ( float ) yTmp;
       var z = ( float ) xz.Y;
-
-#if DEBUG
-      ASSERT( x < 1.1f && x > -1.1f );
-      ASSERT( y < 1.1f && y > -1.1f );
-      ASSERT( z < 1.1f && z > -1.1f );
-      ASSERT( !float.IsNaN( x ) );
-      ASSERT( !float.IsNaN( y ) );
-      ASSERT( !float.IsNaN( z ) );
-#endif
 
       return new Vector3( x, y, z );
     }

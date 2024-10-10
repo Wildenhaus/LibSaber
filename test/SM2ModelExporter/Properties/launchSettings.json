@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SM2ModelExporter": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

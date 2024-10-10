@@ -119,6 +119,22 @@ namespace LibSaber.Shared.Structures
       return (TEnum)Enum.ToObject(typeof(TEnum), value);
     }
 
+    public TEnum[] AsEnumCollection<TEnum>()
+      where TEnum : struct, Enum
+    {
+      var collection = new List<TEnum>();
+
+      foreach (TEnum enumValue in Enum.GetValues<TEnum>())
+      {
+        if (this[enumValue])
+        {
+          collection.Add(enumValue);
+        }
+      }
+
+      return collection.ToArray();
+    }
+
     private static TCount ReadCount( NativeReader reader )
       => reader.ReadUnmanaged<TCount>();
 

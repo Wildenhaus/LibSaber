@@ -10,6 +10,7 @@ using LibSaber.IO;
 using LibSaber.SpaceMarine2.Enumerations;
 using LibSaber.SpaceMarine2.Files;
 using LibSaber.SpaceMarine2.Serialization;
+using LibSaber.SpaceMarine2.Serialization.Geometry;
 using LibSaber.SpaceMarine2.Serialization.Scripting;
 using LibSaber.SpaceMarine2.Structures;
 using LibSaber.SpaceMarine2.Structures.Resources;
@@ -26,7 +27,8 @@ internal class Program
   {
     InitFileSystem();
     //TestAllTextureFormats();
-    //TestDeserializeAllTpls();
+    TestDeserializeAllTpls();
+    //TestDeserializeAllResources();
   }
 
   static void InitFileSystem()
@@ -82,9 +84,10 @@ internal class Program
     var tpls = _fileSystem.EnumerateFiles().Where(x => Path.GetExtension(x.Name) == ".tpl");
     foreach (var tplNode in tpls)
     {
+      var fname = Path.GetFileName(tplNode.Name);
       try
       {
-        var fname = Path.GetFileName(tplNode.Name);
+        
         Console.Write("Deserializing {0}...", fname);
         TestDeserializeTpl(tplNode);
         Console.ForegroundColor = ConsoleColor.Green;
@@ -93,9 +96,11 @@ internal class Program
       }
       catch (Exception ex)
       {
+        //Console.Write("Deserializing {0}...", fname);
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("FAILED.");
         Console.ForegroundColor = ConsoleColor.White;
+        //throw;
       }
     }
   }
@@ -105,6 +110,82 @@ internal class Program
     using var stream = tplNode.Open();
     var reader = new NativeReader(stream, Endianness.LittleEndian);
     var tpl = Serializer<animTPL>.Deserialize(reader);
+
+    TestDeserializeTplData(tplNode, tpl);
+  }
+
+  static void TestDeserializeTplData(IFileSystemNode tplNode, animTPL tpl)
+  {
+    var tplDataName = Path.ChangeExtension(tplNode.Name, ".tpl_data");
+    var tplDataNode = _fileSystem.EnumerateFiles().SingleOrDefault(x => x.Name == tplDataName);
+
+    Stream dataStream = null;
+    if (tplDataNode is null)
+      dataStream = tplNode.Open();
+    else
+      dataStream = tplDataNode.Open();
+
+    byte[] data = new byte[dataStream.Length];
+    if(dataStream is MemoryStream ms)
+    {
+      data = ms.ToArray();
+    }
+    else
+    {
+      using var tmp = new MemoryStream();
+      dataStream.CopyTo(tmp);
+      data = tmp.ToArray();
+    }
+    TestDeserializeTplBuffers(tpl, data);
+  }
+
+  static unsafe void TestDeserializeTplBuffers(animTPL tpl, byte[] data)
+  {
+    foreach (var buffer in tpl.GeometryGraph.Buffers)
+    {
+      SpanReader reader;
+      var startOffset = buffer.StartOffset;
+      var length = (int)buffer.BufferLength;
+      fixed (byte* ptr = data)
+      {
+        var span = new Span<byte>(ptr + startOffset, length);
+        reader = new SpanReader(span);
+      }
+
+      switch (buffer.ElementType)
+      {
+        case GeometryElementType.Face:
+          {
+            //var serializer = new FaceSerializer(buffer);
+            //foreach (var e in serializer.DeserializeRange(reader, 0, buffer.Count)) 
+            //{
+            //}
+            break;
+          }
+        case GeometryElementType.Vertex:
+        {
+            var serializer = new VertexSerializer(buffer);
+            var enumerator = serializer.GetEnumerator(reader, 0, buffer.Count);
+
+            while (enumerator.MoveNext()) { }
+          //foreach (var e in serializer.DeserializeRange(reader, 0, buffer.Count)) { }
+          break;
+        }
+        case GeometryElementType.Interleaved:
+          {
+            var serializer = new InterleavedDataSerializer(buffer);
+            var enumerator = serializer.GetEnumerator(reader, 0, buffer.Count);
+            while (enumerator.MoveNext()) { }
+            //foreach (var e in serializer.DeserializeRange(reader, 0, buffer.Count)) { }
+            break;
+          }
+        default:
+        {
+          continue;
+          throw new NotImplementedException("Unknown buffer type.");
+        }
+      }
+    }
   }
 
   #endregion
@@ -139,6 +220,47 @@ internal class Program
     using var stream = lgNode.Open();
     var reader = new NativeReader(stream, Endianness.LittleEndian);
     var lg = Serializer<scnSCENE>.Deserialize(reader);
+  }
+
+  #endregion
+
+  #region Resources
+
+  static void TestDeserializeAllResources()
+  {
+    var res = _fileSystem.EnumerateFiles().Where(x => Path.GetExtension(x.Name) == ".resource");
+    int i = 0;
+    var sw = Stopwatch.StartNew();
+    foreach (var resNode in res)
+    {
+      i++;
+      //var fname = Path.GetFileName(resNode.Name);
+      //try
+      //{
+
+      //  //Console.Write("Deserializing {0}...", fname);
+        TestDeserializeResource(resNode);
+      //  //Console.ForegroundColor = ConsoleColor.Green;
+      //  //Console.WriteLine("SUCCESS.");
+      //  //Console.ForegroundColor = ConsoleColor.White;
+      //}
+      //catch (Exception ex)
+      //{
+      //  Console.ForegroundColor = ConsoleColor.Red;
+      //  Console.WriteLine("FAILED.");
+      //  Console.ForegroundColor = ConsoleColor.White;
+      //  //throw;
+      //}
+    }
+    sw.Stop();
+    Console.WriteLine("Deserialized {0} in {1}.", i, sw.Elapsed );
+  }
+
+  static void TestDeserializeResource(IFileSystemNode resNode)
+  {
+    using var stream = resNode.Open();
+    var reader = new NativeReader(stream, Endianness.LittleEndian);
+    var res = Serializer<resDESC>.Deserialize(reader);
   }
 
   #endregion

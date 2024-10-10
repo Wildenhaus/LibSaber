@@ -11,7 +11,7 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
     #region Properties
 
     protected GeometryBuffer Buffer { get; }
-    protected GeometryBufferFlags Flags => Buffer.Flags;
+    protected FVFFlags Flags => Buffer.FlagSet;
 
     #endregion
 
