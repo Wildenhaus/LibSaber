@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibSaber.IO;
+﻿using LibSaber.IO;
 using LibSaber.Serialization;
-using LibSaber.Shared.Structures;
 using LibSaber.SpaceMarine2.Enumerations;
 using LibSaber.SpaceMarine2.Structures;
 
@@ -69,12 +63,9 @@ public sealed class GeometryBufferSerializer : SM2SerializerBase<List<GeometryBu
   {
     foreach (var buffer in geometryBuffers)
     {
-      /* The data stored in each buffer is defined by a set of flags.
-       * This is usually 0x3B or 0x3F in length.
-       * It appears that it's always stored as a 64-bit int.
-       */
+      // The data stored in each buffer is defined by a set of flags.
 
-      buffer.Flags = BitSet<short>.Deserialize(reader, null).As<GeometryBufferFlags>();
+      buffer.Flags = Serializer<FVFFlags>.Deserialize(reader);
     }
   }
 

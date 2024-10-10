@@ -14,21 +14,21 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
 
     #region Data Members
 
-    private bool _hasNormal;
-    private bool _hasSkinningData;
+    private Vector3 _position;
+    private Vector3 _scale;
 
     #endregion
 
     #region Constructor
 
-    public VertexSerializer(GeometryBuffer buffer)
+    public VertexSerializer(GeometryBuffer buffer, Vector3? position = null, Vector3? scale = null)
       : base(buffer)
     {
-      ASSERT(buffer.Flags.HasFlag(GeometryBufferFlags._VERT),
-        "Buffer does not specify _VERT in its flags.");
+      ASSERT((Flags & FVFFlags.VERT) != 0,
+        "Buffer does not specify VERT in its flags.");
 
-      _hasNormal = DetermineIfHasNormal(buffer);
-      _hasSkinningData = DetermineIfHasSkinningData(buffer);
+      _position = position ?? new Vector3(0, 0, 0);
+      _scale = scale ?? new Vector3(1, 1, 1);
     }
 
     #endregion
@@ -40,13 +40,9 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
       var vertex = new Vertex();
 
       ReadPosition(reader, ref vertex);
-
-      if (_hasNormal)
-        ReadNormal(reader, ref vertex);
-      if (_hasSkinningData)
-        ReadSkinningData(reader, ref vertex);
-      if (_hasNormal)
-        ReadUncompressedNormal(reader, ref vertex);
+      ReadSkinningData(reader, ref vertex);
+      ReadMaskingFlags(reader, ref vertex);
+      ReadNormal(reader, ref vertex);
 
       return vertex;
     }
@@ -72,118 +68,152 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
     #endregion
 
     #region Private Methods
-
-    private bool DetermineIfHasSkinningData(GeometryBuffer buffer)
-    {
-      return Flags.HasFlag(GeometryBufferFlags._WEIGHT1)
-          || Flags.HasFlag(GeometryBufferFlags._WEIGHT2)
-          || Flags.HasFlag(GeometryBufferFlags._WEIGHT3)
-          || Flags.HasFlag(GeometryBufferFlags._WEIGHT4WithBoneIds)
-          || Flags.HasFlag(GeometryBufferFlags._WEIGHT8WithBones)
-          || Flags.HasFlag(GeometryBufferFlags._INDEX);
-    }
-
-    private bool DetermineIfHasNormal(GeometryBuffer buffer)
-    {
-      return Flags.HasFlag(GeometryBufferFlags._WEIGHT8WithBones)
-          || Flags.HasFlag(GeometryBufferFlags._NORM_IN_VERT4)
-          || Flags.HasFlag(GeometryBufferFlags._COMPRESSED_NORM);
-    }
-
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     private void ReadPosition(NativeReader reader, ref Vertex vertex)
     {
-      if (Flags.HasFlag(GeometryBufferFlags._COMPRESSED_VERT))
+      if ((Flags & FVFFlags.VERT) != 0)
       {
-        vertex.Position = new Vector4(
-          x: reader.ReadInt16().SNormToFloat(),
-          y: reader.ReadInt16().SNormToFloat(),
-          z: reader.ReadInt16().SNormToFloat(),
-          w: 1);
-      }
-      else
-      {
-        vertex.Position = new Vector4(
-          x: reader.ReadFloat32(),
-          y: reader.ReadFloat32(),
-          z: reader.ReadFloat32(),
-          w: 1);
-      }
-    }
+        var posX = _position.X;
+        var posY = _position.Y;
+        var posZ = _position.Z;
+        var scaleX = _scale.X;
+        var scaleY = _scale.Y;
+        var scaleZ = _scale.Z;
 
-    private void ReadNormal(NativeReader reader, ref Vertex vertex)
-    {
-      if (Flags.HasFlag(GeometryBufferFlags._NORM_IN_VERT4))
-      {
-        if (Flags.HasFlag(GeometryBufferFlags._COMPRESSED_VERT))
-          vertex.Normal = DecompressNormalFromInt16(reader.ReadInt16());
+        ASSERT((Flags & FVFFlags.VERT_2D) == 0, "VERT_2D is present.");
+
+        if ((Flags & FVFFlags.VERT_COMPR) != 0)
+        {
+          vertex.Position = new Vector4(
+            x: reader.ReadInt16().SNormToFloat() * scaleX + posX,
+            y: reader.ReadInt16().SNormToFloat() * scaleY + posY,
+            z: reader.ReadInt16().SNormToFloat() * scaleZ + posZ,
+            w: 1);
+
+          if ((Flags & FVFFlags.NORM_IN_VERT4) != 0)
+          {
+            vertex.HasNormal = true;
+            vertex.Normal = DecompressNormalFromInt16(reader.ReadInt16());
+          }
+          else
+          {
+            _ = reader.ReadInt16();
+          }
+        }
         else
-          vertex.Normal = DecompressNormalFromFloat(reader.ReadFloat32());
-      }
-      else
-      {
-        _ = reader.ReadInt16();
+        {
+          vertex.Position = new Vector4(
+          x: reader.ReadFloat32() * scaleX + posX,
+          y: reader.ReadFloat32() * scaleY + posY,
+            z: reader.ReadFloat32() * scaleZ + posZ,
+            w: 1);
+
+          if ((Flags & FVFFlags.NORM_IN_VERT4) != 0)
+          {
+            vertex.HasNormal = true;
+            vertex.Normal = DecompressNormalFromFloat(reader.ReadFloat32());
+          }
+        }
       }
     }
 
-    private void ReadUncompressedNormal(NativeReader reader, ref Vertex vertex)
-    {
-      if (Flags.HasFlag(GeometryBufferFlags._NORM_IN_VERT4))
-        return;
-
-      if (!Flags.HasFlag(GeometryBufferFlags._COMPRESSED_NORM))
-        return;
-
-      var x = reader.ReadFloat32();
-      var y = reader.ReadFloat32();
-      var z = reader.ReadFloat32();
-      vertex.Normal = new Vector4(x, y, z, 1);
-    }
-
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     private void ReadSkinningData(NativeReader reader, ref Vertex vertex)
     {
-      // TODO: Idk if these data types are right, and/or what to do with them.
-      if (Flags.HasFlag(GeometryBufferFlags._WEIGHT1))
-        vertex.Weight1 = reader.ReadByte().UNormToFloat();
-      if (Flags.HasFlag(GeometryBufferFlags._WEIGHT2))
-        vertex.Weight2 = reader.ReadByte().UNormToFloat();
-      if (Flags.HasFlag(GeometryBufferFlags._WEIGHT3))
-        vertex.Weight3 = reader.ReadByte().UNormToFloat();
-      if (Flags.HasFlag(GeometryBufferFlags._WEIGHT4WithBoneIds))
+      const FVFFlags HAS_WEIGHTS = FVFFlags.WEIGHT4 | FVFFlags.WEIGHT8;
+      if ((Flags & HAS_WEIGHTS) != 0)
       {
-        var isShort = !Flags.HasFlag(GeometryBufferFlags._WEIGHT8WithBones);
+        vertex.HasWeight1 = true;
+        vertex.Weight1 = reader.ReadByte().UNormToFloat();
+        vertex.HasWeight2 = true;
+        vertex.Weight2 = reader.ReadByte().UNormToFloat();
+        vertex.HasWeight3 = true;
+        vertex.Weight3 = reader.ReadByte().UNormToFloat();
+        vertex.HasWeight4 = true;
+        vertex.Weight4 = reader.ReadByte().UNormToFloat();
 
-        vertex.Weight1 = reader.ReadByte().UNormToFloat();
-        vertex.Weight2 = reader.ReadByte().UNormToFloat();
-        vertex.Weight3 = reader.ReadByte().UNormToFloat();
-        vertex.Weight4 = reader.ReadByte().UNormToFloat();
-        vertex.Index1 = isShort ? reader.ReadInt16() : reader.ReadByte();
-        vertex.Index2 = isShort ? reader.ReadInt16() : reader.ReadByte();
-        vertex.Index3 = isShort ? reader.ReadInt16() : reader.ReadByte();
-        vertex.Index4 = isShort ? reader.ReadInt16() : reader.ReadByte();
-      }
-      else if (Flags.HasFlag(GeometryBufferFlags._WEIGHT8WithBones))
-      {
-        vertex.Weight1 = reader.ReadByte().UNormToFloat();
-        vertex.Weight2 = reader.ReadByte().UNormToFloat();
-        vertex.Weight3 = reader.ReadByte().UNormToFloat();
-        vertex.Weight4 = reader.ReadByte().UNormToFloat();
-        _ = reader.ReadInt32(); //skip
-        vertex.Index1 = reader.ReadByte();
-        vertex.Index2 = reader.ReadByte();
-        vertex.Index3 = reader.ReadByte();
-        vertex.Index4 = reader.ReadByte();
-        _ = reader.ReadInt32(); // skip
+        if ((Flags & FVFFlags.WEIGHT8) != 0)
+        {
+          vertex.HasWeight5 = true;
+          vertex.Weight5 = reader.ReadByte().UNormToFloat();
+          vertex.HasWeight6 = true;
+          vertex.Weight6 = reader.ReadByte().UNormToFloat();
+          vertex.HasWeight7 = true;
+          vertex.Weight7 = reader.ReadByte().UNormToFloat();
+          vertex.HasWeight8 = true;
+          vertex.Weight8 = reader.ReadByte().UNormToFloat();
+        }
       }
 
-      if (Flags.HasFlag(GeometryBufferFlags._INDEX))
+      const FVFFlags HAS_INDICES = FVFFlags.INDICES | FVFFlags.INDICES16;
+      if ((Flags & HAS_INDICES) != 0)
       {
-        vertex.Index1 = reader.ReadByte();
-        vertex.Index2 = reader.ReadByte();
-        vertex.Index3 = reader.ReadByte();
-        vertex.Index4 = reader.ReadByte();
+        if ((Flags & FVFFlags.INDICES16) != 0)
+        {
+          vertex.Index1 = reader.ReadInt16();
+          vertex.Index2 = reader.ReadInt16();
+          vertex.Index3 = reader.ReadInt16();
+          vertex.Index4 = reader.ReadInt16();
+          if ((Flags & FVFFlags.WEIGHT8) != 0)
+          {
+            vertex.Index5 = reader.ReadInt16();
+            vertex.Index6 = reader.ReadInt16();
+            vertex.Index7 = reader.ReadInt16();
+            vertex.Index8 = reader.ReadInt16();
+          }
+        }
+        else
+        {
+          vertex.Index1 = reader.ReadByte();
+          vertex.Index2 = reader.ReadByte();
+          vertex.Index3 = reader.ReadByte();
+          vertex.Index4 = reader.ReadByte();
+          if ((Flags & FVFFlags.WEIGHT8) != 0)
+          {
+            vertex.Index5 = reader.ReadByte();
+            vertex.Index6 = reader.ReadByte();
+            vertex.Index7 = reader.ReadByte();
+            vertex.Index8 = reader.ReadByte();
+          }
+        }
       }
     }
 
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
+    private void ReadMaskingFlags(NativeReader reader, ref Vertex vertex)
+    {
+      if ((Flags & FVFFlags.MASKING_FLAGS) != 0)
+      {
+        _ = reader.ReadInt32();
+      }
+    }
+
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
+    private void ReadNormal(NativeReader reader, ref Vertex vertex)
+    {
+      if ((Flags & FVFFlags.NORM) != 0)
+      {
+        if ((Flags & FVFFlags.NORM_IN_VERT4) != 0)
+          return;
+
+        if ((Flags & FVFFlags.NORM_COMPR) != 0)
+        {
+          vertex.HasNormal = true;
+          vertex.Normal = DecompressNormalFromInt16(reader.ReadInt16()); // TODO
+        }
+        else
+        {
+          vertex.HasNormal = true;
+          vertex.Normal = new(
+          x: reader.ReadFloat32(),
+          y: reader.ReadFloat32(),
+            z: reader.ReadFloat32(),
+            w: 1);
+        }
+      }
+    }
+
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     private Vector4 DecompressNormalFromInt16(short w)
     {
       /* In common_input.vsh, if the vertex IS compressed, they're unpacking the normal like so:
@@ -214,6 +244,7 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
       return new Vector4(x, y, z, SaberMath.Sign(w)); // TODO: Should this W be 1?
     }
 
+    [MethodImpl(Globals.METHOD_IMPL_AGGRESSIVE)]
     private Vector4 DecompressNormalFromFloat(float w)
     {
       /* In common_input.vsh, if the vertex isn't compressed, they're unpacking the normal like so:

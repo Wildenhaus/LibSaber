@@ -1,5 +1,4 @@
-﻿using LibSaber.Shared.Structures;
-using LibSaber.SpaceMarine2.Enumerations;
+﻿using LibSaber.SpaceMarine2.Enumerations;
 
 namespace LibSaber.SpaceMarine2.Structures;
 
@@ -9,7 +8,7 @@ public class GeometryBuffer
   #region Properties
 
   public ushort FlagSize { get; set; }
-  public GeometryBufferFlags Flags { get; set; }
+  public FVFFlags Flags { get; set; }
   public ushort ElementSize { get; set; }
   public uint BufferLength { get; set; }
   public long StartOffset { get; set; }
@@ -31,26 +30,33 @@ public class GeometryBuffer
 
   private GeometryElementType GetElementType()
   {
-    if (Flags.HasFlag(GeometryBufferFlags._VERT))
+    const FVFFlags FLAGS_INTERLEAVED =
+      FVFFlags.TANG0 |
+      FVFFlags.TANG1 |
+      FVFFlags.TANG2 |
+      FVFFlags.TANG3 |
+      FVFFlags.TANG4 |
+      FVFFlags.COLOR0 |
+      FVFFlags.COLOR1 |
+      FVFFlags.COLOR2 |
+      FVFFlags.COLOR3 |
+      FVFFlags.COLOR4 |
+      FVFFlags.COLOR5 |
+      FVFFlags.TEX0 |
+      FVFFlags.TEX1 |
+      FVFFlags.TEX2 |
+      FVFFlags.TEX3 |
+      FVFFlags.TEX4 |
+      FVFFlags.TEX5;
+
+    if ((Flags & FVFFlags.VERT) != 0)
       return GeometryElementType.Vertex;
 
-    if (Flags.HasFlag(GeometryBufferFlags._TANG0)
-      || Flags.HasFlag(GeometryBufferFlags._TANG1)
-      || Flags.HasFlag(GeometryBufferFlags._TANG2)
-      || Flags.HasFlag(GeometryBufferFlags._TANG3)
-      || Flags.HasFlag(GeometryBufferFlags._TEX0)
-      || Flags.HasFlag(GeometryBufferFlags._TEX1)
-      || Flags.HasFlag(GeometryBufferFlags._TEX2)
-      || Flags.HasFlag(GeometryBufferFlags._TEX3)
-      || Flags.HasFlag(GeometryBufferFlags._TEX4)
-      )
+    if ((Flags & FLAGS_INTERLEAVED) != 0)
       return GeometryElementType.Interleaved;
 
-    if (Flags == GeometryBufferFlags._FACE)
+    if (Flags == FVFFlags.NONE)
       return GeometryElementType.Face;
-
-    if (Flags.HasFlag(GeometryBufferFlags._WEIGHT8WithBones))
-      return GeometryElementType.BoneId;
 
     return GeometryElementType.Unknown;
   }
