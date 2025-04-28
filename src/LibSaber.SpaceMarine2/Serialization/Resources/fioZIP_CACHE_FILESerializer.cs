@@ -11,6 +11,18 @@ public class fioZIP_CACHE_FILESerializer : SM2SerializerBase<fioZIP_CACHE_FILE>
   {
     var cache = new fioZIP_CACHE_FILE();
 
+    // Update 7: Cache files now have 0x20 bytes at the top. Hash/Checksum?
+    // TODO: Detect this in a better way
+
+    bool isVersion7Plus = false;
+    var peek = reader.ReadInt32();
+    reader.Position -= 4;
+    if (peek > 5 || peek < 1)
+    {
+      isVersion7Plus = true;
+      reader.Position += 0x20;
+    }
+
     while (reader.Position < reader.Length)
     {
       var version = reader.ReadInt32();
@@ -24,7 +36,9 @@ public class fioZIP_CACHE_FILESerializer : SM2SerializerBase<fioZIP_CACHE_FILE>
         CompressMethod = (fioZIP_CACHE_FILE.COMPRESS_METHOD)reader.ReadInt16(),
       };
 
-      if (version > 5)
+      if (isVersion7Plus)
+        _ = reader.ReadInt64();
+      else if (version > 5 && !isVersion7Plus)
         _ = reader.ReadInt32(); //CRC?
 
       cache.AddEntry(entry);
@@ -34,5 +48,3 @@ public class fioZIP_CACHE_FILESerializer : SM2SerializerBase<fioZIP_CACHE_FILE>
   }
 
 }
-
-

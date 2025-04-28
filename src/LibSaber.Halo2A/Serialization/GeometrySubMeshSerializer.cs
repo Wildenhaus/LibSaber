@@ -65,7 +65,7 @@ namespace LibSaber.Halo2A.Serialization
         }
       }
 
-      ASSERT( reader.BaseStream.Position == sectionEndOffset,
+      ASSERT( reader.Position == sectionEndOffset,
           "Reader position does not match the submesh section's end offset." );
 
       return submeshes;
@@ -82,7 +82,7 @@ namespace LibSaber.Halo2A.Serialization
         return;
 
       const int BUFFER_INFO_SIZE = 0xC;
-      var sectionSize = endOffset - reader.BaseStream.Position;
+      var sectionSize = endOffset - reader.Position;
       var elementSize = sectionSize / submeshes.Count;
       bool hasAdditionalData = elementSize > BUFFER_INFO_SIZE;
 
@@ -190,7 +190,7 @@ namespace LibSaber.Halo2A.Serialization
               break;
           }
 
-          ASSERT( reader.BaseStream.Position == endOffset );
+          ASSERT( reader.Position == endOffset );
 
           if ( sentinel == 0xFFFF )
             break;

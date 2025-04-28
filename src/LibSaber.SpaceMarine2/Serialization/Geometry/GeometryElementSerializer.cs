@@ -1,7 +1,6 @@
-﻿using LibSaber.SpaceMarine2.Enumerations;
+﻿using LibSaber.IO;
+using LibSaber.SpaceMarine2.Enumerations;
 using LibSaber.SpaceMarine2.Structures;
-using LibSaber.IO;
-using LibSaber.Shared.Structures;
 
 namespace LibSaber.SpaceMarine2.Serialization.Geometry
 {
@@ -11,7 +10,7 @@ namespace LibSaber.SpaceMarine2.Serialization.Geometry
     #region Properties
 
     protected GeometryBuffer Buffer { get; }
-    protected GeometryBufferFlags Flags => Buffer.Flags;
+    protected FVFFlags Flags => Buffer.Flags;
 
     #endregion
 

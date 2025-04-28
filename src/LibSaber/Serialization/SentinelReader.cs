@@ -58,6 +58,9 @@ namespace LibSaber.Serialization
     [DebuggerHidden]
     public bool Next( bool boundsCheck = true )
     {
+      if (_reader.Position == _stream.Length)
+        return false;
+
       if ( boundsCheck && !_delimiterFlag && _index > -1 )
       {
         var difference = Math.Abs( EndOffset - _reader.Position );

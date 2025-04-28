@@ -63,7 +63,7 @@ public sealed class GeometrySubMeshSerializer : SM2SerializerBase<List<GeometryS
       }
     }
 
-    ASSERT(reader.BaseStream.Position == sectionEndOffset,
+    ASSERT(reader.Position == sectionEndOffset,
         "Reader position does not match the submesh section's end offset.");
 
     return submeshes;
@@ -80,7 +80,7 @@ public sealed class GeometrySubMeshSerializer : SM2SerializerBase<List<GeometryS
       return;
 
     const int BUFFER_INFO_SIZE = 0xC;
-    var sectionSize = endOffset - reader.BaseStream.Position;
+    var sectionSize = endOffset - reader.Position;
     var elementSize = sectionSize / submeshes.Count;
     bool hasAdditionalData = elementSize > BUFFER_INFO_SIZE;
 
@@ -189,7 +189,7 @@ public sealed class GeometrySubMeshSerializer : SM2SerializerBase<List<GeometryS
             break;
         }
 
-        ASSERT(reader.BaseStream.Position == endOffset);
+        ASSERT(reader.Position == endOffset);
 
         if (sentinel == 0xFFFF)
           break;
