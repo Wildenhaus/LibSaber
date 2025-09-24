@@ -23,7 +23,9 @@ public class fioZIP_CACHE_FILESerializer : SM2SerializerBase<fioZIP_CACHE_FILE>
       reader.Position += 0x20;
     }
 
-    while (reader.Position < reader.Length)
+    const int SIZE_OF_CACHE_ITEM = 30;
+
+    while (reader.Position + SIZE_OF_CACHE_ITEM < reader.Length)
     {
       var version = reader.ReadInt32();
       var unk_04 = reader.ReadByte();
